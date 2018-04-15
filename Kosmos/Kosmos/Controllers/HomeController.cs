@@ -28,22 +28,6 @@ namespace Kosmos.Controllers
 
         public IActionResult Index()
         {  
-            try
-            {
-                var listOfUsers = userRepository.GetAll();
-                var newRole = new RoleModel()
-                {
-                    Name = "Adrian"
-                };
-                roleRepository.AddOrUpdate(newRole);
-
-                roleRepository.Delete(2);
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-
             return View();
         }
 
