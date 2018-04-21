@@ -11,9 +11,14 @@ namespace BusinessLayer.Models
         public string Username { get; set; }
         public RoleModel Role { get; set; }
 
+        public UserModel()
+        {
+
+        }
+
         public UserModel(User user)
         {
-            this.ID = user.ID;
+            this.ID = user.Id;
             this.Username = user.Username;
             Role = new RoleModel(user.Role);
         }

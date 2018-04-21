@@ -2,6 +2,7 @@
 using BusinessLayer.Models;
 using DataAccessLayer;
 using DataAccessLayer.Models;
+using DataAccessLayer.RepositoryModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,38 @@ namespace BusinessLayer
             this.context = context;
         }
 
-        public UserModel AddOrUpdate(UserModel entity)
+        public User AddOrUpdate(User user)
         {
-            throw new System.NotImplementedException();
+            var newUser = new User();
+            newUser = context.Users.Where(x => x.Username.ToLower().Equals(user.Username.ToLower())).FirstOrDefault();
+            
+            try
+            {
+                if (newUser != null)
+                {
+                    newUser.Username = user.Username;
+                    newUser.Password = user.Password;
+                    newUser.RoleId = user.RoleId;
+                    context.Update(newUser);
+                }
+                else
+                {
+                    newUser = new User()
+                    {
+                        Username = user.Username,
+                        Password = user.Password,
+                        RoleId = user.RoleId
+                    };
+                    context.Add(newUser);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                throw ex;
+            }
+            context.SaveChanges();
+
+            return GetById(newUser.Id);
         }
 
         public void Delete(int Id)
@@ -27,15 +57,19 @@ namespace BusinessLayer
             throw new System.NotImplementedException();
         }
 
-        public List<UserModel> GetAll()
+        public List<User> GetAll()
         {
-            return context.Users.Include(z => z.Role).AsNoTracking().Select(z => new UserModel(z)).ToList();
+            return context.Users.Include(z => z.Role).AsNoTracking().ToList();
         }
 
-        public UserModel GetById(int id)
+        public User GetById(int id)
         {
-            var j = context.Users.Where(x => x.ID == id).Include(z => z.Role).AsNoTracking().ToList().FirstOrDefault();
-            return new UserModel(j);
+            return context.Users.Where(x => x.Id == id).Include(z => z.Role).AsNoTracking().FirstOrDefault();
+        }
+
+        public User GetByUsername(string username)
+        {
+            return context.Users.Where(x => x.Username.Equals(username)).Include(z => z.Role).AsNoTracking().FirstOrDefault();
         }
     }
 }

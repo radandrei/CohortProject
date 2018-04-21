@@ -20,7 +20,8 @@ namespace DataAccessLayer.Data
 
             var roles = new Role[]
             {
-            new Role{Name="Admin"}
+            new Role{Name="Administrator"},
+            new Role{Name="Patient"}
             };
             foreach (Role s in roles)
             {
@@ -28,16 +29,6 @@ namespace DataAccessLayer.Data
             }
             context.SaveChanges();
 
-
-            var users = new User[]
-            {
-            new User{Username="Gabriel",Password="raducuu",RoleID=context.Roles.First().ID}
-            };
-            foreach (User s in users)
-            {
-                context.Users.Add(s);
-            }
-            context.SaveChanges();
         }
     }
 }

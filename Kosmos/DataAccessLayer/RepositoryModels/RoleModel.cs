@@ -9,7 +9,7 @@ namespace BusinessLayer.Models
     {
         public RoleModel(Role role)
         {
-            ID = role.ID;
+            ID = role.Id;
             Name = role.Name;
         }
 

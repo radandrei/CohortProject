@@ -12,7 +12,7 @@ namespace DataAccessLayer.Models
         public bool Active { get; set; }
         public int MedicalChartID { get; set; }
         public int CabinetID { get; set; }
-        public int UserID { get; set; }
+        public int UserId { get; set; }
         public int PersonalDataID { get; set; }
 
 
