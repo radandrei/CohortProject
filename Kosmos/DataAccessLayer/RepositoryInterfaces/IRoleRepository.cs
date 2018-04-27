@@ -1,12 +1,9 @@
 ﻿using BusinessLayer.Interfaces;
-using BusinessLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using DataAccessLayer.Models;
 
 namespace DataAccessLayer.RepositoryInterfaces
 {
-    public interface IRoleRepository : IBaseRepository<RoleModel>
+    public interface IRoleRepository : IBaseRepository<Role>
     {
     }
 }

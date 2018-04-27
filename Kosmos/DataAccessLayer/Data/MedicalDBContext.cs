@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Entities;
 using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -55,6 +56,10 @@ namespace DataAccessLayer
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+            modelBuilder.Entity<User>()
+                  .HasOne(a => a.Person)
+                  .WithOne(b => b.User)
+                  .HasForeignKey<Person>(b => b.UserId);
         }
 
     }

@@ -1,14 +1,13 @@
 ﻿using BusinessLayer.Models;
+using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BusinessLayer.Interfaces
 {
-    public interface IUserRepository : IBaseRepository<UserModel>
+    public interface IUserRepository : IBaseRepository<User>
     {
-        List<UserModel> GetAll();
-
-        UserModel GetById(int id);
+        User GetByUsername(string username);
     }
 }
