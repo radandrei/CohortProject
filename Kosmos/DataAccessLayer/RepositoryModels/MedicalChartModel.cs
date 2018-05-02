@@ -13,10 +13,10 @@ namespace BusinessLayer.Models
         public DateTime CreationDate { get; set; }
         public string Notes { get; set; }
 
-        public ICollection<EventModel> Events { get; set; }
-        public ICollection<ContraindicationModel> Contraindications { get; set; }
-        public ICollection<AllergyModel> Allergies { get; set; }
-        public ICollection<MedicalChartHistoryModel> ChartModifications { get; set; }
+        //public ICollection<EventModel> Events { get; set; }
+        //public ICollection<ContraindicationModel> Contraindications { get; set; }
+        //public ICollection<AllergyModel> Allergies { get; set; }
+        //public ICollection<MedicalChartHistoryModel> ChartModifications { get; set; }
 
         public MedicalChartModel(MedicalChart medicalChart)
         {
@@ -24,25 +24,20 @@ namespace BusinessLayer.Models
             CreationDate = medicalChart.CreationDate;
             Notes = medicalChart.Notes;
 
-            Events = new Collection<EventModel>();
-            foreach(Event E in medicalChart.Events)
-            {
-                Events.Add(new EventModel(E));
-            }
+       
+
+            //Contraindications = new Collection<ContraindicationModel>();
+            //foreach (Contraindication C in medicalChart.Contraindications)
+            //{
+            //    Contraindications.Add(new ContraindicationModel(C));
+            //}
 
 
-            Contraindications = new Collection<ContraindicationModel>();
-            foreach (Contraindication C in medicalChart.Contraindications)
-            {
-                Contraindications.Add(new ContraindicationModel(C));
-            }
-
-
-            Allergies = new Collection<AllergyModel>();
-            foreach (Allergy A in medicalChart.Allergies)
-            {
-                Allergies.Add(new AllergyModel(A));
-            }
+            //Allergies = new Collection<AllergyModel>();
+            //foreach (Allergy A in medicalChart.Allergies)
+            //{
+            //    Allergies.Add(new AllergyModel(A));
+            //}
         }
     }
 }

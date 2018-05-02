@@ -16,11 +16,10 @@ namespace BusinessLayer.Models
 
         public MedicalChartModel MedicalChart { get; set; }
         public CabinetModel Cabinet { get; set; }
-        public UserModel User { get; set; }
         public PersonalDataModel PersonalData { get; set; }
 
-        public ICollection<MedicalDataModel> MedicalData { get; set; }
-        public ICollection<AppointmentModel> Appointments { get; set; }
+        //public ICollection<MedicalDataModel> MedicalData { get; set; }
+        //public ICollection<AppointmentModel> Appointments { get; set; }
 
         public PersonModel(Person person)
         {
@@ -28,15 +27,10 @@ namespace BusinessLayer.Models
             FirstName = person.FirstName;
             LastName = person.LastName;
             Active = person.Active;
+            MedicalChart=new MedicalChartModel(person.MedicalChart);
+            Cabinet = new CabinetModel(person.Cabinet);
+            PersonalData = new PersonalDataModel(person.PersonalData);
 
-            MedicalData = new Collection<MedicalDataModel>();
-            Appointments = new Collection<AppointmentModel>();
-
-            foreach (MedicalData MD in person.MedicalData)
-                MedicalData.Add(new MedicalDataModel(MD));
-
-            foreach (Appointment A in person.Appointments)
-                Appointments.Add(new AppointmentModel(A));
         }
     }
 }

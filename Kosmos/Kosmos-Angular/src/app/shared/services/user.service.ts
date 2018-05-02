@@ -8,6 +8,7 @@ import { BaseService } from "./base.service";
 
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
+import { User } from '../../models/user';
 
 //  Add the RxJS Observable operators we need in this app.
 // import '../../rxjs-operators';
@@ -17,11 +18,13 @@ import { BehaviorSubject } from 'rxjs/Rx';
 export class UserService extends BaseService {
 
   baseUrl: string = '';
+  userUrl;
 
   // Observable navItem source
   private _authNavStatusSource = new BehaviorSubject<boolean>(false);
   // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
+  private headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
   private loggedIn = false;
 
@@ -32,6 +35,7 @@ export class UserService extends BaseService {
     // header component resulting in authed user nav links disappearing despite the fact user is still logged in
     this._authNavStatusSource.next(this.loggedIn);
     this.baseUrl = configService.getApiURI();
+    this.userUrl=this.baseUrl+"/user";
   }
 
   register(username: string, password: string): Observable<UserRegistration> {
@@ -44,54 +48,51 @@ export class UserService extends BaseService {
       .catch(this.handleError);
   }
 
-
-  private handlePromiseError(error: any): Promise<any> {
-    console.log(error.status);
-    return;
-  }
-
-  callTest(id: number | string) {
-    let authToken = localStorage.getItem('auth_token');
+  tryLogin(username: string, password: string): Promise<boolean> {
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('username', username);
+    urlSearchParams.append('password', password);
+    // let body = urlSearchParams.toString();
+    let body=JSON.stringify({ username, password })
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `Bearer ${authToken}`);
-    
-    let options = new RequestOptions({ headers: headers });
-
-
-    return this.http.get(this.baseUrl + "/Account/TestLogin",options)
+    let opt=new RequestOptions({headers:this.headers});
+    return this.http.post(this.baseUrl+"/Account/Login", body,{headers})
       .toPromise()
-      .then(response => { response.json() as boolean; })
-      .catch(this.handlePromiseError);
+      .then(response =>{ 
+        localStorage.setItem('auth_token',JSON.parse(response.text()).auth_token);
+        localStorage.setItem('auth_id',JSON.parse(response.text()).id);
+       return(response.status==200)})
+      .catch(this.failed);
+
   }
 
-  login(userName, password) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    return this.http
-      .post(
-        this.baseUrl + '/Account/Login',
-        JSON.stringify({ userName, password }), { headers }
-      )
-      .map(res => res.json())
-      .map(res => {
-        localStorage.setItem('auth_token', res.auth_token);
-        this.loggedIn = true;
-        this._authNavStatusSource.next(true);
-        return true;
-      })
-      .catch(this.handleError);
-  }
-
-  logout() {
+  tryLogOut() {
     localStorage.removeItem('auth_token');
-    this.loggedIn = false;
-    this._authNavStatusSource.next(false);
   }
+
+  private failed(error: any): Promise<boolean> {
+    return Promise.resolve(false);
+  }
+
 
   isLoggedIn() {
     return this.loggedIn;
   }
+
+
+  private handlePromiseError(error: any): Promise<any> {
+    console.log(error.status);
+    //if(error.status="403")
+    return null;
+  }
+
+  getUser(id:number|string):Promise<User>{
+    return this.http.get(this.userUrl+"/getbyid/"+id)
+    .toPromise()
+    .then(response => response.json() as User)
+    .catch(this.handlePromiseError)
+  }
+
 }
 

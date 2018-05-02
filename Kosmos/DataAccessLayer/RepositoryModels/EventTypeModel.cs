@@ -10,7 +10,7 @@ namespace BusinessLayer.Models
         public int ID { get; set; }
         public string Name { get; set; }
 
-        public ICollection<EventModel> Event { get; set; }
+        //public ICollection<EventModel> Event { get; set; }
 
         public EventTypeModel(EventType eventType)
         {

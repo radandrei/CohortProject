@@ -13,7 +13,7 @@ namespace BusinessLayer.Models
         public string Name { get; set; }
         public string Observations { get; set; }
 
-        public MedicalChartModel MedicalChart { get; set; }
+        //public MedicalChartModel MedicalChart { get; set; }
         public DiagnosisModel Diagnosis { get; set; }
         public EventTypeModel Type { get; set; }
 
@@ -24,9 +24,11 @@ namespace BusinessLayer.Models
             Name = Event.Name;
             Observations = Event.Observations;
 
-            MedicalChart = new MedicalChartModel(Event.MedicalChart);
-            Diagnosis = new DiagnosisModel(Event.Diagnosis);
-            Type = new EventTypeModel(Event.Type);
+            //MedicalChart = new MedicalChartModel(Event.MedicalChart);
+            if(Event.Diagnosis!=null)
+                Diagnosis = new DiagnosisModel(Event.Diagnosis);
+            if(Event.Type!=null)
+                Type = new EventTypeModel(Event.Type);
         }
     }
 }

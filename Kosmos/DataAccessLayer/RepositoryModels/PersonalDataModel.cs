@@ -10,13 +10,10 @@ namespace DataAccessLayer.Models
         public int ID { get; set; }
         public DateTime Birthdate { get; set; }
 
-        public PersonModel Person { get; set; }
-
-        PersonalDataModel(PersonalData personalData)
+        public PersonalDataModel(PersonalData personalData)
         {
             ID = personalData.ID;
             Birthdate = personalData.Birthdate;
-            Person = new PersonModel(personalData.Person);
         }
     }
 }

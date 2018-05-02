@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Entities;
 using DataAccessLayer.Models;
+using DataAccessLayer.RepositoryModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,17 +11,21 @@ namespace BusinessLayer.Models
     {
         public int ID { get; set; }
 
-        public List<MedicineModel> Medicine { get; set; }
-        public EventModel Event { get; set; }
+
+        //public EventModel Event { get; set; }
+        //public List<PrescribedMedicineModel> PrescribedMedicine;
+        //public DiagnosisModel Diagnosis;
 
         public PrescriptionModel(Prescription prescription)
         {
             ID = prescription.ID;
-            Medicine = new List<MedicineModel>();
-            foreach (Medicine M in prescription.Medicine)
-                Medicine.Add(new MedicineModel(M));
-            
-            Event = new EventModel(prescription.Event);
+            //if(prescription.Diagnosis!=null)
+            //    Diagnosis = new DiagnosisModel(prescription.Diagnosis);
+            //this.PrescribedMedicine = new List<PrescribedMedicineModel>();
+            //foreach(PrescribedMedicine prescribedMedicine in prescription.PrescribedMedicine)
+            //{
+            //    PrescribedMedicine.Add(new PrescribedMedicineModel(prescribedMedicine));
+            //}
         }
     }
 }
