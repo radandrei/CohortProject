@@ -44,6 +44,27 @@ export class UserService extends BaseService {
       .catch(this.handleError);
   }
 
+
+  private handlePromiseError(error: any): Promise<any> {
+    console.log(error.status);
+    return;
+  }
+
+  callTest(id: number | string) {
+    let authToken = localStorage.getItem('auth_token');
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', `Bearer ${authToken}`);
+    
+    let options = new RequestOptions({ headers: headers });
+
+
+    return this.http.get(this.baseUrl + "/Account/TestLogin",options)
+      .toPromise()
+      .then(response => { response.json() as boolean; })
+      .catch(this.handlePromiseError);
+  }
+
   login(userName, password) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

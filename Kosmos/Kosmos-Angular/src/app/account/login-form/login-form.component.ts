@@ -37,7 +37,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     // prevent memory leak by unsubscribing
     this.subscription.unsubscribe();
   }
-
+  
   login({ value, valid }: { value: Credentials, valid: boolean }) {
     this.submitted = true;
     this.isRequesting = true;
@@ -48,7 +48,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         .subscribe(
         result => {         
           if (result) {
-             this.router.navigate(['/']);             
+             this.router.navigate(['/']);  
           }
         },
         error => this.errors = error);

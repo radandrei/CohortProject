@@ -3,9 +3,11 @@ using BusinessLayer.Models;
 using DataAccessLayer;
 using DataAccessLayer.Helpers;
 using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace BusinessLayer.Service
 {
@@ -30,6 +32,12 @@ namespace BusinessLayer.Service
 
             return null;
 
+        }
+
+        public UserModel GetUserById(int id)
+        {
+            var user = userRepository.GetById(id);
+            return new UserModel(user);
         }
 
         public UserModel CreateUser(string username, string password)

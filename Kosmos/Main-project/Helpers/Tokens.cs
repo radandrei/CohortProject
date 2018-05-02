@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Kosmos.Extensions;
 using Kosmos.Helpers;
 using Kosmos.Models;
 using Newtonsoft.Json;
@@ -13,7 +14,7 @@ namespace Kosmos.Helpers
         {
             var response = new
             {
-                id = identity.Claims.Single(c => c.Type == "id").Value,
+                id = identity.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Id).Value,
                 auth_token = await jwtFactory.GenerateEncodedToken(userName, identity),
                 expires_in = (int)jwtOptions.ValidFor.TotalSeconds
             };
