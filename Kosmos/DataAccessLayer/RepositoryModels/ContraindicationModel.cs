@@ -10,11 +10,11 @@ namespace BusinessLayer.Models
     {
         public int ID { get; set; }
 
-        public MedicalChartModel MedicalChart { get; set; }
+        //public MedicalChartModel MedicalChart { get; set; }
         public MedicineModel Medicine { get; set; }
 
         public ContraindicationModel(Contraindication contraindication) {
-            MedicalChart = new MedicalChartModel(contraindication.MedicalChart);
+            //MedicalChart = new MedicalChartModel(contraindication.MedicalChart);
             Medicine = new MedicineModel(contraindication.Medicine);
         }
     }

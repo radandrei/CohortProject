@@ -1,0 +1,65 @@
+.login-page {
+    width: 400px;
+    padding: 10% 0 0;
+    margin: auto;
+  }
+  .form {
+    position: relative;
+    z-index: 1;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 0px;
+    text-align: center;
+  }
+  .form input {
+    font-family: Zemestro;
+    outline: 0;
+    width: 100%;
+    border-top:0;
+    border-left: 0;
+    border-right: 0;
+    border-color: rgb(115, 26, 133);
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 20px;
+    color:rgb(172, 54, 196);
+  }
+  .form input:hover{
+    border-color: rgb(185, 107, 201);
+  }
+  .form input:focus{
+    border-color: rgb(106, 60, 116);
+  }
+  .form button {
+    font-family: Zemestro;
+    text-transform: uppercase;
+    outline: 0;
+    background-color: rgb(172, 54, 196);
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: white;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+  }
+  .form button:hover{
+    background: rgb(185, 107, 201);
+  }
+  #invalid,#errors{
+    text-align: center;
+    color: rgb(196, 54, 97);
+    font-size: 25px;
+    font-family: Zemestro;
+  }
+  .logo{
+    background-image: url("kosmos.png");
+    height:150px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+  
+  }

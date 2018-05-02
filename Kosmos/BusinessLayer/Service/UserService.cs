@@ -43,5 +43,14 @@ namespace BusinessLayer.Service
 
             return new UserModel(saved);
         }
+
+        public UserModel getUserById(int id)
+        {
+            var user = userRepository.GetById(id);
+
+            if (user != null)
+                return new UserModel(user);
+            return null;
+        }
     }
 }

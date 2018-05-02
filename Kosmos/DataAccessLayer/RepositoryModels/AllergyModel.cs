@@ -10,13 +10,14 @@ namespace BusinessLayer.Models
     {
         public int ID { get; set; }
 
-        public MedicalChartModel MedicalChart { get; set; }
+        //public MedicalChartModel MedicalChart { get;set; }
         public AllergicReactionModel AllergicReaction { get; set; }
 
         public AllergyModel(Allergy allergy)
         {
             ID = allergy.ID;
-            MedicalChart = new MedicalChartModel(allergy.MedicalChart);
+            //MedicalChart = new MedicalChartModel(allergy.MedicalChart);
+            AllergicReaction = new AllergicReactionModel(allergy.AllergicReaction);
         }
     }
 }

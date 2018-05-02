@@ -14,6 +14,8 @@ using Kosmos.Models;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using Newtonsoft.Json;
+using System.Linq;
+using BusinessLayer.Models;
 
 namespace MainProject.Controllers
 {
@@ -44,6 +46,10 @@ namespace MainProject.Controllers
 
         [TempData]
         public string ErrorMessage { get; set; }
+
+
+     
+
 
         [HttpPost("login")]
         [AllowAnonymous]

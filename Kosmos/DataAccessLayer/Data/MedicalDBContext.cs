@@ -24,12 +24,13 @@ namespace DataAccessLayer
         public DbSet<Event> Events { get; set; }
         public DbSet<MedicalChart> MedicalCharts { get; set; }
         public DbSet<MedicalChartHistory> MedicalChartHistory { get; set; }
-        public DbSet<MedicalData> MedicalData { get; set; }
+        public DbSet<MedicalData> MedicalData { get; set; } 
         public DbSet<Medicine> Medicine { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<PersonalData> PersonalData { get; set; }
         public DbSet<Prescription> Prescriptions { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
+        public DbSet<PrescribedMedicine> PrescribedMedicine { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,6 +52,7 @@ namespace DataAccessLayer
             modelBuilder.Entity<PersonalData>().ToTable("PersonalData");
             modelBuilder.Entity<Prescription>().ToTable("Prescription");
             modelBuilder.Entity<EventType>().ToTable("EventType");
+            modelBuilder.Entity<PrescribedMedicine>().ToTable("PrescribedMedicine");
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

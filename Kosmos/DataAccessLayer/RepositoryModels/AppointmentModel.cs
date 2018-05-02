@@ -12,7 +12,24 @@ namespace BusinessLayer.Models
         public bool Confirmed { get; set; }
         public string Notes { get; set; }
 
-        public PersonModel Person { get; set; }
+        //public PersonModel Person { get; set; }
+
+       public AppointmentModel() { }
+
+       public AppointmentModel(DateTime Date,string notes,bool Confirmed)
+        {
+            this.Date = Date;
+            this.Confirmed = Confirmed;
+            this.Notes = Notes;
+        }
+
+
+        public AppointmentModel(AppointmentModel appointment)
+        {
+            Date = appointment.Date;
+            Confirmed = appointment.Confirmed;
+            Notes = appointment.Notes;
+        }
 
         public AppointmentModel(Appointment appointment)
         {
@@ -20,7 +37,7 @@ namespace BusinessLayer.Models
             Date = appointment.Date;
             Confirmed = appointment.Confirmed;
             Notes = appointment.Notes;
-            Person = new PersonModel(appointment.Person);
+            //Person = new PersonModel(appointment.Person);
         }
     }
 }

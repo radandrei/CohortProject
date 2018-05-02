@@ -4,54 +4,65 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Credentials } from '../../shared/models/credentials.interface';
 import { UserService } from '../../shared/services/user.service';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.css']
+  styleUrls: ['./login-form.component.css'],
+  providers:[UserService]
 })
 
-export class LoginFormComponent implements OnInit, OnDestroy {
+export class LoginFormComponent {
   
-  private subscription: Subscription;
+  public invalid = false;
+  user: User;
 
-  brandNew: boolean;
-  errors: string;
-  isRequesting: boolean;
-  submitted: boolean = false;
-  credentials: Credentials = { username: '', password: '' };
 
-  constructor(private userService: UserService, private router: Router,private activatedRoute: ActivatedRoute) { }
-
-    ngOnInit() {
-
-    // subscribe to router event
-    this.subscription = this.activatedRoute.queryParams.subscribe(
-      (param: any) => {
-         this.brandNew = param['brandNew'];   
-         this.credentials.username = param['username'];         
-      });      
+  constructor(private router: Router,
+    private route: ActivatedRoute, private userService: UserService) {
+      this.userService.tryLogOut();
+      localStorage.removeItem("myUser");
   }
 
-   ngOnDestroy() {
-    // prevent memory leak by unsubscribing
-    this.subscription.unsubscribe();
-  }
-
-  login({ value, valid }: { value: Credentials, valid: boolean }) {
-    this.submitted = true;
-    this.isRequesting = true;
-    this.errors='';
-    if (valid) {
-      this.userService.login(value.username, value.password)
-        .finally(() => this.isRequesting = false)
-        .subscribe(
-        result => {         
-          if (result) {
-             this.router.navigate(['/']);             
-          }
-        },
-        error => this.errors = error);
+  login(name: string, password: string): void {
+    if (!name) {
+      this.invalid = true;
+      return;
     }
+    if (!password) {
+      this.invalid = true;
+      return;
+    }
+    this.invalid = false;
+    this.userService.tryLogin(name, password)
+      .then(authenticated => {
+
+        this.invalid = !authenticated;
+        if (authenticated) {
+          let id=localStorage.getItem("auth_id");
+          this.userService.getUser(id).then(user => {
+            if (user.role.name == "Patient") {
+              this.router.navigateByUrl("patient");
+            }
+            if (user.role.name == "ROLE_USER") {
+              this.router.navigateByUrl("user-page");
+            }
+            if(user.role.name=="ROLE_REPRESENTANT"){
+              this.router.navigateByUrl("representant-page");
+            }
+            localStorage.setItem('myUser',JSON.stringify(user));
+          }
+          )
+        }
+      });
   }
+
+  goToRegister(){
+    this.router.navigate(['/register'])
+  }
+
+
+
+
 }

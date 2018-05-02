@@ -1,0 +1,10 @@
+<mat-dialog-content>
+            <fieldset><br>
+            Date:<input #date type="datetime-local" style="margin-left:3px;border-top:0px;border-left:0px;border-right:0px;"/><br><br>  
+            Notes: <input #notes type="text" style="margin-left:3px;border-top:0px;border-left:0px;border-right:0px;"/><br><br> 
+            </fieldset><br><br>
+        
+          <button type='submit' mat-dialog-close="Submit" (click)='add(date.value,notes.value)'>Add</button>
+          <button type='submit' mat-dialog-close="Cancel" (click)='cancel()'>Cancel</button>
+          <br><br>
+</mat-dialog-content>
