@@ -1,10 +1,4 @@
-﻿using DataAccessLayer.Entities;
-using DataAccessLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataAccessLayer.Models
+﻿namespace DataAccessLayer.Entities
 {
     public class PrescribedMedicine
     {

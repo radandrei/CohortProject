@@ -6,8 +6,7 @@ using System.Text;
 
 namespace DataAccessLayer.RepositoryInterfaces
 {
-    public interface IEventRepository:IBaseRepository<Event>
+    public interface IPersonRepository : IBaseRepository<Person>
     {
-        List<Event> GetAllByMedicalChart(int medicalChartId);
     }
 }

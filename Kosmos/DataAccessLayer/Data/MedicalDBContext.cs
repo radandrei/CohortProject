@@ -1,8 +1,5 @@
 ﻿using DataAccessLayer.Entities;
-using DataAccessLayer.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 
 namespace DataAccessLayer
@@ -24,7 +21,6 @@ namespace DataAccessLayer
         public DbSet<Event> Events { get; set; }
         public DbSet<MedicalChart> MedicalCharts { get; set; }
         public DbSet<MedicalChartHistory> MedicalChartHistory { get; set; }
-        public DbSet<MedicalData> MedicalData { get; set; } 
         public DbSet<Medicine> Medicine { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<PersonalData> PersonalData { get; set; }
@@ -46,7 +42,6 @@ namespace DataAccessLayer
             modelBuilder.Entity<Event>().ToTable("Event");
             modelBuilder.Entity<MedicalChart>().ToTable("MedicalChart");
             modelBuilder.Entity<MedicalChartHistory>().ToTable("MedicalChartHistory");
-            modelBuilder.Entity<MedicalData>().ToTable("MedicalData");
             modelBuilder.Entity<Medicine>().ToTable("Medicine");
             modelBuilder.Entity<Person>().ToTable("Person");
             modelBuilder.Entity<PersonalData>().ToTable("PersonalData");

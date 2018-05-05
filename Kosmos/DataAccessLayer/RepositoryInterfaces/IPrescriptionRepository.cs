@@ -1,5 +1,5 @@
 ﻿using BusinessLayer.Interfaces;
-using DataAccessLayer.Models;
+using DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

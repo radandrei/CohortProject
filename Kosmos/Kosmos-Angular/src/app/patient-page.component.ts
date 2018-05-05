@@ -12,38 +12,53 @@ import { EventService } from './shared/services/event.service';
   selector: 'patient',
   templateUrl: './patient-page.component.html',
   styleUrls: ['./patient-page.component.css'],
-  providers:[UserService,AllergyService,ContraindicationService,EventService]
+  providers: [UserService, AllergyService, ContraindicationService, EventService]
 })
 export class PatientPageComponent {
-    idUser = localStorage.getItem('auth_id');
-    user=JSON.parse(localStorage.getItem('myUser'));
-    allergies;
-    contraindications;
-    events;
+  idUser = localStorage.getItem('auth_id');
+  user = JSON.parse(localStorage.getItem('myUser'));
+  allergies;
+  contraindications;
+  events;
 
-    dateToString(birthDate:Date):string{
-      var currentTime = new Date(birthDate);
-      var month = currentTime.getMonth();
-      var day = currentTime.getDate();
-      var year = currentTime.getFullYear();
-      var date = day + "." + month + "." + year;
-      return date;
-    }
+  dateToString(birthDate: Date): string {
+    var currentTime = new Date(birthDate);
+    var month = currentTime.getMonth();
+    var day = currentTime.getDate();
+    var year = currentTime.getFullYear();
+    var date = day + "." + month + "." + year;
+    return date;
+  }
 
-    constructor(private userService:UserService,private allergyService:AllergyService,private contraindicationService:ContraindicationService
-      ,private eventService:EventService,private router:Router){
-      const medicalChartId=this.user.person.medicalChart.id;
-      allergyService.getAllergies(medicalChartId).subscribe(allergies => {this.allergies=allergies });
-      contraindicationService.getContraindications(medicalChartId).subscribe(contraindication=>{this.contraindications=contraindication});
-      eventService.getEvents(medicalChartId).subscribe(events=>{this.events=events;})
-    }
+  constructor(private userService: UserService, private allergyService: AllergyService, private contraindicationService: ContraindicationService
+    , private eventService: EventService, private router: Router) {
+    const medicalChartId = this.user.person.medicalChart.id;
+    allergyService.getAllergies(medicalChartId)
+      .subscribe(allergies => { this.allergies = allergies },
+        error => {
+          if (error.status == 403)
+            this.router.navigateByUrl("login");
+        });
+
+    contraindicationService.getContraindications(medicalChartId)
+      .subscribe(contraindication => { this.contraindications = contraindication },
+        error => {
+          if (error.status == 403)
+            this.router.navigateByUrl("login");
+        });
+    eventService.getEvents(medicalChartId).subscribe(events => { this.events = events; },
+      error => {
+        if (error.status == 403)
+          this.router.navigateByUrl("login");
+      });
+  }
 
 
-    logout(){
-      this.userService.tryLogOut();
-      this.router.navigateByUrl("login");
-    }
+  logout() {
+    this.userService.tryLogOut();
+    this.router.navigateByUrl("login");
+  }
 
-  
+
 
 }

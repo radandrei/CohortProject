@@ -1,13 +1,10 @@
-﻿using BusinessLayer.Models;
-using DataAccessLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DataAccessLayer.Entities;
 
 namespace BusinessLayer.Interfaces
 {
     public interface IUserRepository : IBaseRepository<User>
     {
+        User CreateUser(User user);
         User GetByUsername(string username);
     }
 }

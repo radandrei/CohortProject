@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models;
+﻿using DataAccessLayer.Entities;
 using DataAccessLayer.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -30,12 +30,12 @@ namespace DataAccessLayer.Repository
         public Role AddOrUpdate(Role role)
         {
             Role changedRole;
+            changedRole = context.Roles.Where(x => x.Id == role.Id).FirstOrDefault();
 
             try
             {
-                if (role.Id != 0)
+                if (changedRole == null)
                 {
-                    changedRole = context.Roles.Where(x => x.Id == role.Id).FirstOrDefault();
                     changedRole.Name = role.Name;
                     context.Update(changedRole);
                 }

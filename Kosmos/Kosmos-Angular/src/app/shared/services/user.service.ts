@@ -3,12 +3,15 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { UserRegistration } from '../models/user.registration.interface';
 import { ConfigService } from '../utils/config.service';
+import { LoginModel } from '../utils/login-model';
 
 import { BaseService } from "./base.service";
 
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { User } from '../../models/user';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators/catchError';
 
 //  Add the RxJS Observable operators we need in this app.
 // import '../../rxjs-operators';
@@ -28,44 +31,59 @@ export class UserService extends BaseService {
 
   private loggedIn = false;
 
-  constructor(private http: Http, private configService: ConfigService) {
+  constructor(private http: HttpClient, private configService: ConfigService) {
     super();
     this.loggedIn = !!localStorage.getItem('auth_token');
     // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
     // header component resulting in authed user nav links disappearing despite the fact user is still logged in
     this._authNavStatusSource.next(this.loggedIn);
     this.baseUrl = configService.getApiURI();
-    this.userUrl=this.baseUrl+"/user";
+    this.userUrl = this.baseUrl + "/user";
   }
 
-  register(username: string, password: string): Observable<UserRegistration> {
+  register(username: string, password: string){
     let body = JSON.stringify({ username, password });
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.baseUrl + "/Account/Register", body, options)
-      .map(res => true)
-      .catch(this.handleError);
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+
+   this.http.post<string>(this.baseUrl + "/Account/Register", body, httpOptions).subscribe(
+    (val)=> {
+      console.log("Response: ", val);
+    },
+    error=>{
+      this.handleError;
+    },
+    ()=>{
+      console.log("Post call completed");
+    });
+ 
   }
 
-  tryLogin(username: string, password: string): Promise<boolean> {
+  tryLogin(username: string, password: string): Observable<LoginModel> {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('username', username);
     urlSearchParams.append('password', password);
     // let body = urlSearchParams.toString();
-    let body=JSON.stringify({ username, password })
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let opt=new RequestOptions({headers:this.headers});
-    return this.http.post(this.baseUrl+"/Account/Login", body,{headers})
-      .toPromise()
-      .then(response =>{ 
-        localStorage.setItem('auth_token',JSON.parse(response.text()).auth_token);
-        localStorage.setItem('auth_id',JSON.parse(response.text()).id);
-       return(response.status==200)})
-      .catch(this.failed);
+    let body = JSON.stringify({ username, password });
 
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.post<LoginModel>(this.baseUrl + "/Account/Login", body, httpOptions);
+      
   }
+
+  callTest(id:number) : Observable<boolean>{
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+ 
+    return this.http.post<boolean>(this.baseUrl + '/Account/TestLogin', id, httpOptions);
+  }
+
 
   tryLogOut() {
     localStorage.removeItem('auth_token');
@@ -87,11 +105,11 @@ export class UserService extends BaseService {
     return null;
   }
 
-  getUser(id:number|string):Promise<User>{
-    return this.http.get(this.userUrl+"/getbyid/"+id)
-    .toPromise()
-    .then(response => response.json() as User)
-    .catch(this.handlePromiseError)
+  getUser(id: number | string): Promise<User> {
+    return this.http.get<User>(this.userUrl + "/getbyid/" + id)
+      .toPromise()
+      .then(response => response )
+      .catch(this.handlePromiseError)
   }
 
 }

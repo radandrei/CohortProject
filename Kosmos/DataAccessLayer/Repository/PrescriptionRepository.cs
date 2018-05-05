@@ -1,11 +1,10 @@
 ﻿using DataAccessLayer.Entities;
-using DataAccessLayer.Models;
 using DataAccessLayer.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 
 namespace DataAccessLayer.Repository
 {
@@ -22,9 +21,9 @@ namespace DataAccessLayer.Repository
 
             try
             {
-                if (Prescription.ID != 0)
+                if (Prescription.Id != 0)
                 {
-                    changedPrescription = context.Prescriptions.Where(x => x.ID == Prescription.ID).FirstOrDefault();
+                    changedPrescription = context.Prescriptions.Where(x => x.Id == Prescription.Id).FirstOrDefault();
                     changedPrescription.PrescribedMedicine = new List<PrescribedMedicine>(Prescription.PrescribedMedicine);
                     context.Update(changedPrescription);
                 }
@@ -50,7 +49,7 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                Prescription PrescriptionToDelete = new Prescription() { ID = Id };
+                Prescription PrescriptionToDelete = new Prescription() { Id = Id };
                 context.Entry(PrescriptionToDelete).State = EntityState.Deleted;
                 context.SaveChanges();
             }
@@ -67,7 +66,7 @@ namespace DataAccessLayer.Repository
 
         public Prescription GetById(int Id)
         {
-            var j = context.Prescriptions.Where(x => x.ID == Id).FirstOrDefault();
+            var j = context.Prescriptions.Where(x => x.Id == Id).FirstOrDefault();
             return j;
         }
 

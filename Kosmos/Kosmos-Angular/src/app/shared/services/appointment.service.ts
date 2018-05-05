@@ -4,6 +4,7 @@ import { ConfigService } from '../utils/config.service';
 import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { Appointment } from '../../models/Appointment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 
@@ -15,43 +16,38 @@ export class AppointmentService {
   AppointmentUrl;
 
 
-  constructor(private http: Http, private configService: ConfigService, private router:Router) {
+  constructor(private http: HttpClient, private configService: ConfigService, private router: Router) {
     this.baseUrl = configService.getApiURI();
-    this.AppointmentUrl=this.baseUrl+"/Appointment";
+    this.AppointmentUrl = this.baseUrl + "/Appointment";
   }
 
-  extractData(result:Response):Appointment[]{
+  extractData(result: Response): Appointment[] {
     return result.json();
   }
 
-  add(body){
-    {
-      this.http.post(this.AppointmentUrl+"/add",body)
-      .toPromise()
-      .then(response => (response.status == 200))
-      .catch(this.loginFailed);
-  }
+  add(body): Observable<Appointment> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.post<Appointment>(this.AppointmentUrl + "/add", body, httpOptions);
+
   }
 
   loginFailed(error: any): Promise<boolean> {
     return Promise.resolve(false);
   }
 
-  deleteAppointment(id){
-    this.http.delete(this.AppointmentUrl+"/delete/"+id)
-    .toPromise()
-    .then(response=>(response.status==200))
-    .catch(this.loginFailed);
+  deleteAppointment(id) {
+    this.http.delete(this.AppointmentUrl + "/delete/" + id)
+      .toPromise()
+      .then()
+      .catch(this.loginFailed);
   }
 
-  getAppointments(id:number|string): Observable<Appointment[]> {
-    return this.http.get(this.AppointmentUrl+"/getbyperson/"+id)
-      .map(this.extractData)
-      .catch(error =>{
-        if(error.status==403)
-          this.router.navigateByUrl("login");
-        return Observable.throw(new Error(error.status));
-      })
+  getAppointments(id: number | string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(this.AppointmentUrl + "/getbyperson/" + id);
   }
 
 }

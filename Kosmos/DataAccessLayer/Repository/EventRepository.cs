@@ -1,11 +1,9 @@
 ﻿using DataAccessLayer.Entities;
-using DataAccessLayer.Models;
 using DataAccessLayer.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DataAccessLayer.Repository
 {
@@ -85,7 +83,7 @@ namespace DataAccessLayer.Repository
         {
             return context.Events.Where(x => x.MedicalChartID == medicalChartId)
                .OrderByDescending(x=>x.EndDate)
-                .Include(x => x.Type).Include(x => x.Diagnosis).Include(x=>x.Diagnosis.Prescription).Include(x=>x.Diagnosis.Prescription).AsNoTracking().ToList();
+                .Include(x => x.Type).Include(x => x.Diagnosis).Include(x=>x.Diagnosis.Prescription).AsNoTracking().ToList();
         }
     }
 }

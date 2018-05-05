@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using BusinessLayer.Models;
-using DataAccessLayer.Models;
+using DataAccessLayer.Entities;
 
 namespace BusinessLayer.Models
 {
@@ -23,7 +23,7 @@ namespace BusinessLayer.Models
 
         public PersonModel(Person person)
         {
-            ID = person.ID;
+            ID = person.Id;
             FirstName = person.FirstName;
             LastName = person.LastName;
             Active = person.Active;

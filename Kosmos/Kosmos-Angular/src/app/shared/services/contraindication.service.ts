@@ -4,6 +4,7 @@ import { ConfigService } from '../utils/config.service';
 import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { Contraindication } from '../../models/contraindication';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -15,7 +16,7 @@ export class ContraindicationService {
   ContraindicationUrl;
 
 
-  constructor(private http: Http, private configService: ConfigService, private router:Router) {
+  constructor(private http: HttpClient, private configService: ConfigService, private router:Router) {
     this.baseUrl = configService.getApiURI();
     this.ContraindicationUrl=this.baseUrl+"/contraindication";
   }
@@ -26,13 +27,8 @@ export class ContraindicationService {
 
 
   getContraindications(id:number|string): Observable<Contraindication[]> {
-    return this.http.get(this.ContraindicationUrl+"/getbymedicalchart/"+id)
-      .map(this.extractData)
-      .catch(error =>{
-        if(error.status==403)
-          this.router.navigateByUrl("login");
-        return Observable.throw(new Error(error.status));
-      })
+    return this.http.get<Contraindication[]>(this.ContraindicationUrl+"/getbymedicalchart/"+id);
+      
   }
 
 }

@@ -27,17 +27,16 @@ export class RegistrationFormComponent implements OnInit {
     this.submitted = true;
     this.isRequesting = true;
     this.errors = '';
-    if (valid) {
-      this.userService.register(value.username, value.password)
-        .finally(() => this.isRequesting = false)
-        .subscribe(
-          result => {
-            if (result) {
-              this.router.navigate(['/login'], { queryParams: { brandNew: true, username: value.username } });
-            }
-          },
-          errors => this.errors = errors);
-    }
 
+    if (valid) {
+      this.userService.register(value.username, value.password);
+        // .subscribe(
+        //   result => {
+        //     this.isRequesting = false;
+        //     this.router.navigate(['/login'], { queryParams: { brandNew: true, username: value.username } });
+        //   },
+        //   errors => { this.errors = errors; }
+        // );
+    }
   }
 }

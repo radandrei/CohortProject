@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using BusinessLayer.Models;
 using BusinessLayer.Service;
 using DataAccessLayer;
-using DataAccessLayer.Models;
+using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

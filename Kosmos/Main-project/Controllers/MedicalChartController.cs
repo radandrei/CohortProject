@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
 using DataAccessLayer;
-using DataAccessLayer.Models;
+using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kosmos.Controllers

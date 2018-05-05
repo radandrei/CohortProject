@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.Entities
 {
     public class Person
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool Active { get; set; }
@@ -21,7 +21,6 @@ namespace DataAccessLayer.Models
         public User User { get; set; }
         public PersonalData PersonalData { get; set; }
 
-        public ICollection<MedicalData> MedicalData { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
     }
 }

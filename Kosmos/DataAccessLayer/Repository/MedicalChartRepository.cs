@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models;
+﻿using DataAccessLayer.Entities;
 using DataAccessLayer.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;

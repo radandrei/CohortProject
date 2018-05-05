@@ -2,7 +2,7 @@
 using BusinessLayer.Models;
 using DataAccessLayer;
 using DataAccessLayer.Helpers;
-using DataAccessLayer.Models;
+using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace BusinessLayer.Service
 
         public UserModel CreateUser(string username, string password)
         {
-            var saved = userRepository.AddOrUpdate(new User()
+            var saved = userRepository.CreateUser(new User()
             {
                 Username = username,
                 Password = SecurePasswordHasher.Hash(password),
@@ -50,6 +50,11 @@ namespace BusinessLayer.Service
             });
 
             return new UserModel(saved);
+        }
+
+        public int testMePlease(int x, int y)
+        {
+            return x * y;
         }
 
         public UserModel getUserById(int id)

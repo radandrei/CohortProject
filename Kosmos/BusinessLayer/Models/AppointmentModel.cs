@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models;
+﻿using DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,12 +11,13 @@ namespace BusinessLayer.Models
         public DateTime Date { get; set; }
         public bool Confirmed { get; set; }
         public string Notes { get; set; }
+        public int PersonId { get; set; }
 
         //public PersonModel Person { get; set; }
 
-       public AppointmentModel() { }
+        public AppointmentModel() { }
 
-       public AppointmentModel(DateTime Date,string notes,bool Confirmed)
+        public AppointmentModel(DateTime Date, string notes, bool Confirmed)
         {
             this.Date = Date;
             this.Confirmed = Confirmed;

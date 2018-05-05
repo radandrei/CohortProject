@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.Entities
 {
     public class Prescription
     {
-        public int ID { get; set; }
-        //public int EventID { get; set; }
-        //public Event Event { get; set; }
+        public int Id { get; set; }
         public int MedicalChartID { get; set; }
+        public int DiagnosisId { get; set; }
+
         public List<PrescribedMedicine> PrescribedMedicine;
         public MedicalChart MedicalChart;
         public Diagnosis Diagnosis;

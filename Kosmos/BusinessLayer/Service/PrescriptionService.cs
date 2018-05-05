@@ -1,12 +1,9 @@
 ﻿using BusinessLayer.Models;
 using DataAccessLayer;
 using DataAccessLayer.Entities;
-using DataAccessLayer.Models;
 using DataAccessLayer.Repository;
 using DataAccessLayer.RepositoryInterfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 
 namespace BusinessLayer.Service

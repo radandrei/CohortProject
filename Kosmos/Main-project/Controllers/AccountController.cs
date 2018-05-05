@@ -8,7 +8,6 @@ using login_model.Models;
 using login_model.Models.AccountViewModels;
 using Kosmos.Controllers;
 using BusinessLayer.Service;
-using DataAccessLayer;
 using Kosmos.Helpers;
 using Kosmos.Models;
 using Microsoft.Extensions.Options;
@@ -18,6 +17,7 @@ using System.Security.Principal;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using BusinessLayer.Models;
+using DataAccessLayer;
 
 namespace MainProject.Controllers
 {
@@ -97,7 +97,7 @@ namespace MainProject.Controllers
                 try
                 {
                     var x = userService.CreateUser(model.Username, model.Password);
-                    return new OkObjectResult("Account created");
+                    return new OkObjectResult(new { response = "Account created" });
                 }
                 catch (Exception ex)
                 {
@@ -127,7 +127,7 @@ namespace MainProject.Controllers
         {
             try
             {
-                var currentUser = getLoggedInUser();
+                var currentUser = GetLoggedInUser();
             }
             catch (Exception ex)
             {
@@ -141,7 +141,7 @@ namespace MainProject.Controllers
         #region Helpers
 
 
-        private UserModel getLoggedInUser()
+        private UserModel GetLoggedInUser()
         {
             var userId = Int32.Parse(_caller.Claims.Single(c => c.Type == "id").Value);
 

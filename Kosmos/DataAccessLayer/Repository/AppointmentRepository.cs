@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models;
+﻿using DataAccessLayer.Entities;
 using DataAccessLayer.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,15 +18,16 @@ namespace DataAccessLayer.Repository
         public Appointment AddOrUpdate(Appointment Appointment)
         {
             Appointment changedAppointment;
+            changedAppointment = context.Appointments.FirstOrDefault(x => x.ID == Appointment.ID);
 
             try
             {
-                if (Appointment.ID != 0)
+                if (changedAppointment != null)
                 {
-                    changedAppointment = context.Appointments.Where(x => x.ID == Appointment.ID).FirstOrDefault();
                     changedAppointment.Date = Appointment.Date;
                     changedAppointment.Notes = Appointment.Notes;
                     changedAppointment.Confirmed = Appointment.Confirmed;
+                    changedAppointment.PersonID = Appointment.PersonID;
                     context.Update(changedAppointment);
                 }
                 else
