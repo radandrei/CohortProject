@@ -1,6 +1,8 @@
 import { Medicine } from "./medicine";
+import {Diagnosis } from './diagnosis';
 
 export class Prescription{
     id:number;
-    medicine:Medicine [];
+    medicine:PrescribedMedicine [];
+    diagnosis:Diagnosis;;
 }
