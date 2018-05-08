@@ -5,12 +5,14 @@ import { RegistrationFormComponent } from './account/registration-form/registrat
 import { LoginFormComponent } from './account/login-form/login-form.component';
 import { PatientPageComponent } from './patient-page.component';
 import { PatientAppointmentPage } from './patient-appointments.component';
+import { PatientPrescriptionsPage } from './patient-prescriptions/patient-prescriptions.component';
 
 const appRoutes: Routes = [
   { path: 'register', component: RegistrationFormComponent },
   { path: 'login', component: LoginFormComponent },
   {path:'patient',component:PatientPageComponent},
   {path:'patient-appointment',component:PatientAppointmentPage},
+  {path:'patient-prescriptions',component:PatientPrescriptionsPage},
   {path:"**",component:LoginFormComponent}
 ];
 

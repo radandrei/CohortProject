@@ -32,15 +32,11 @@ namespace Main_Project.Controllers
         {
             var item = AppointmentService.getAppointmentsByPerson(id);
 
-            if (item.Count == 0)
-            {
-                return NotFound();
-            }
             return new ObjectResult(item);
         }
 
         [HttpPost("[action]")]
-        [Authorize(Policy="Patient")]
+        [Authorize(Policy = "Patient")]
         public IActionResult Add([FromBody]AppointmentModel model)
         {
             try

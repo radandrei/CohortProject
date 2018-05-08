@@ -25,7 +25,7 @@ namespace BusinessLayer
         public User CreateUser(User user)
         {
             var newUser = new User();
-            newUser = context.Users.Where(x => x.Username.ToLower().Equals(user.Username.ToLower())).FirstOrDefault();
+            newUser = context.Users.Where(x => x.Username.ToLower().Equals(user.Username.ToLower())).Include(u=>u.Person).Include(r=>r.Role).AsNoTracking().FirstOrDefault();
 
             try
             {
@@ -50,7 +50,7 @@ namespace BusinessLayer
             }
             context.SaveChanges();
 
-            return newUser;
+            return GetById(newUser.Id);
         }
 
         public void Delete(int Id)

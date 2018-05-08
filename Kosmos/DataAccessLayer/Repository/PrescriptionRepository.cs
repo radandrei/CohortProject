@@ -21,9 +21,9 @@ namespace DataAccessLayer.Repository
 
             try
             {
-                if (Prescription.Id != 0)
+                if (Prescription.ID != 0)
                 {
-                    changedPrescription = context.Prescriptions.Where(x => x.Id == Prescription.Id).FirstOrDefault();
+                    changedPrescription = context.Prescriptions.Where(x => x.ID == Prescription.ID).FirstOrDefault();
                     changedPrescription.PrescribedMedicine = new List<PrescribedMedicine>(Prescription.PrescribedMedicine);
                     context.Update(changedPrescription);
                 }
@@ -32,7 +32,7 @@ namespace DataAccessLayer.Repository
                     changedPrescription = new Prescription()
                     {
                         PrescribedMedicine = new List<PrescribedMedicine>(Prescription.PrescribedMedicine)
-                };
+                    };
                     context.Add(changedPrescription);
                 }
             }
@@ -49,7 +49,7 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                Prescription PrescriptionToDelete = new Prescription() { Id = Id };
+                Prescription PrescriptionToDelete = new Prescription() { ID = Id };
                 context.Entry(PrescriptionToDelete).State = EntityState.Deleted;
                 context.SaveChanges();
             }
@@ -66,17 +66,13 @@ namespace DataAccessLayer.Repository
 
         public Prescription GetById(int Id)
         {
-            var j = context.Prescriptions.Where(x => x.Id == Id).FirstOrDefault();
+            var j = context.Prescriptions.Where(x => x.ID == Id).FirstOrDefault();
             return j;
         }
 
         public List<Prescription> GetAllByMedicalChart(int medicalChartId)
         {
-            //IQueryable<Contraindication> DeterminedContraindications = context.Contraindications.Where(x => x.MedicalChartID == medicalChartId);
-            //IQueryable<Medicine> DeterminedMedicine = context.Medicine.Where(x => DeterminedContraindications.Any(y => y.MedicineID == x.ID));
-            //IQueryable<PrescribedMedicine> DeterminedPresribed = context.PrescribedMedicine.Where(x => DeterminedMedicine.Any(y => y.ID == x.MedicineID));
-            //return context.Prescriptions.Where(x =>DeterminedPresribed.Any(y=>y.PrescriptionID==x.ID)).ToList();
-            return context.Prescriptions.Where(x => x.MedicalChartID == medicalChartId).ToList();
+            return context.Prescriptions.Where(x => x.MedicalChartID == medicalChartId).Include(z => z.Diagnosis).ToList();
         }
     }
 }

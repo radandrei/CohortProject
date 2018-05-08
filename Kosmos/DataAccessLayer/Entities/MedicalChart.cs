@@ -15,5 +15,6 @@ namespace DataAccessLayer.Entities
         public ICollection<Contraindication> Contraindications { get; set; }
         public ICollection<Allergy> Allergies { get; set; }
         public ICollection<MedicalChartHistory> ChartModifications { get; set; }
+        public ICollection<Prescription> Prescriptions { get; set; }
     }
 }

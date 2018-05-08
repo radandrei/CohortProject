@@ -4,7 +4,7 @@ using DataAccessLayer.Entities;
 using DataAccessLayer.Repository;
 using DataAccessLayer.RepositoryInterfaces;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace BusinessLayer.Service
 {
@@ -17,14 +17,25 @@ namespace BusinessLayer.Service
             PrescriptionRepository = new PrescriptionRepository(context);
         }
 
-        public List<PrescriptionModel> getAllergiesByMedicalChart(int medicalChartId)
+        public List<PrescriptionModel> GetAllergiesByMedicalChart(int medicalChartId)
         {
-            List<PrescriptionModel> PrescriptionList = new List<PrescriptionModel>();
-            List<Prescription> returnList = PrescriptionRepository.GetAllByMedicalChart(medicalChartId);
-            foreach (Prescription Prescription in returnList)
-                PrescriptionList.Add(new PrescriptionModel(Prescription));
-            return PrescriptionList;
+            //List<PrescriptionModel> PrescriptionList = new List<PrescriptionModel>();
+            //List<Prescription> returnList = PrescriptionRepository.GetAllByMedicalChart(medicalChartId);
+            //foreach (Prescription Prescription in returnList)
+            //    PrescriptionList.Add(new PrescriptionModel(Prescription));
+            //return PrescriptionList;
+
+            return null;
 
         }
+
+        public List<PrescriptionModel> GetPrescriptionsByMedicalChart(int medicalChartId)
+        {
+            var prescriptionList = PrescriptionRepository.GetAllByMedicalChart(medicalChartId);
+            var returnList = prescriptionList.Select(x => new PrescriptionModel(x)).ToList();
+
+            return returnList;
+        }
+
     }
 }

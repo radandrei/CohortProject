@@ -53,10 +53,12 @@ namespace DataAccessLayer
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
             modelBuilder.Entity<User>()
                   .HasOne(a => a.Person)
                   .WithOne(b => b.User)
                   .HasForeignKey<Person>(b => b.UserId);
+
         }
 
     }

@@ -32,12 +32,28 @@ namespace Main_Project.Controllers
         [HttpGet("[action]/{id}")]
         public IActionResult GetByPerson(int id)
         {
-            var item = PrescriptionService.getAllergiesByMedicalChart(id);
+            var item = PrescriptionService.GetAllergiesByMedicalChart(id);
             if (item == null)
             {
                 return NotFound();
             }
             return new ObjectResult(item);
+        }
+
+        [HttpGet("[action]/{id}")]
+        [Authorize(Policy ="Patient")]
+        public IActionResult GetByMedicalChart(int id)
+        {
+            try
+            {
+                var item = PrescriptionService.GetPrescriptionsByMedicalChart(id);
+
+                return new OkObjectResult(item);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
         }
 
         [HttpPost("[action]")]

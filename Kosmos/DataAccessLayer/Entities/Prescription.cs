@@ -7,12 +7,15 @@ namespace DataAccessLayer.Entities
 {
     public class Prescription
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
+        public DateTime Date { get; set; }
+        public string Notes { get; set; }
         public int MedicalChartID { get; set; }
-        public int DiagnosisId { get; set; }
+        public int DiagnosisID { get; set; }
 
-        public List<PrescribedMedicine> PrescribedMedicine;
-        public MedicalChart MedicalChart;
-        public Diagnosis Diagnosis;
+        public MedicalChart MedicalChart { get; set; }
+        public Diagnosis Diagnosis { get; set; }
+        public ICollection<PrescribedMedicine> PrescribedMedicine { get; set; }
+
     }
 }
