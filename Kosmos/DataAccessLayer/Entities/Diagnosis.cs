@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.Entities
 {
     public class Diagnosis
     {
         public int ID { get; set; }
-        public int PrescriptionID { get; set; }
+        public string Name { get; set; }
 
         public Event Event { get; set; }
         public Prescription Prescription { get; set; }

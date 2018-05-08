@@ -11,7 +11,7 @@ namespace Kosmos.Extensions
         {
             public static class JwtClaimIdentifiers
             {
-                public const string Role = "role", Id = "id";
+                public const string Role = "rol", Id = "id";
             }
 
             public static class JwtClaims

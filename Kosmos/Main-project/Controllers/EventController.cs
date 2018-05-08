@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Service;
 using DataAccessLayer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Main_Project.Controllers
@@ -27,6 +28,7 @@ namespace Main_Project.Controllers
         }
 
         [HttpGet("[action]/{id}")]
+        [Authorize(Policy ="Patient")]
         public IActionResult GetByMedicalChart(int id)
         {
             var item = EventService.getEventsByMedicalChart(id);

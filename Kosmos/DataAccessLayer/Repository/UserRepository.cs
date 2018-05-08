@@ -1,9 +1,8 @@
 ﻿using BusinessLayer.Interfaces;
-using BusinessLayer.Models;
 using DataAccessLayer;
-using DataAccessLayer.Models;
-using DataAccessLayer.RepositoryModels;
+using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,21 +17,19 @@ namespace BusinessLayer
             this.context = context;
         }
 
-        public User AddOrUpdate(User user)
+        public User AddOrUpdate(User entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User CreateUser(User user)
         {
             var newUser = new User();
-            newUser = context.Users.Where(x => x.Username.ToLower().Equals(user.Username.ToLower())).FirstOrDefault();
-            
+            newUser = context.Users.Where(x => x.Username.ToLower().Equals(user.Username.ToLower())).Include(u=>u.Person).Include(r=>r.Role).AsNoTracking().FirstOrDefault();
+
             try
             {
-                if (newUser != null)
-                {
-                    newUser.Username = user.Username;
-                    newUser.Password = user.Password;
-                    newUser.RoleId = user.RoleId;
-                    context.Update(newUser);
-                }
-                else
+                if (newUser == null)
                 {
                     newUser = new User()
                     {
@@ -41,6 +38,10 @@ namespace BusinessLayer
                         RoleId = user.RoleId
                     };
                     context.Add(newUser);
+                }
+                else
+                {
+                    throw new InvalidOperationException("User already exists");
                 }
             }
             catch (DbUpdateException ex)

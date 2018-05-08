@@ -1,11 +1,10 @@
 ﻿using DataAccessLayer.Entities;
-using DataAccessLayer.Models;
 using DataAccessLayer.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 
 namespace DataAccessLayer.Repository
 {
@@ -33,7 +32,7 @@ namespace DataAccessLayer.Repository
                     changedPrescription = new Prescription()
                     {
                         PrescribedMedicine = new List<PrescribedMedicine>(Prescription.PrescribedMedicine)
-                };
+                    };
                     context.Add(changedPrescription);
                 }
             }
@@ -73,11 +72,7 @@ namespace DataAccessLayer.Repository
 
         public List<Prescription> GetAllByMedicalChart(int medicalChartId)
         {
-            //IQueryable<Contraindication> DeterminedContraindications = context.Contraindications.Where(x => x.MedicalChartID == medicalChartId);
-            //IQueryable<Medicine> DeterminedMedicine = context.Medicine.Where(x => DeterminedContraindications.Any(y => y.MedicineID == x.ID));
-            //IQueryable<PrescribedMedicine> DeterminedPresribed = context.PrescribedMedicine.Where(x => DeterminedMedicine.Any(y => y.ID == x.MedicineID));
-            //return context.Prescriptions.Where(x =>DeterminedPresribed.Any(y=>y.PrescriptionID==x.ID)).ToList();
-            return context.Prescriptions.Where(x => x.MedicalChartID == medicalChartId).ToList();
+            return context.Prescriptions.Where(x => x.MedicalChartID == medicalChartId).Include(z => z.Diagnosis).ToList();
         }
     }
 }

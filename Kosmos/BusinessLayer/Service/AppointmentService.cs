@@ -1,12 +1,10 @@
 ﻿using BusinessLayer.Models;
 using DataAccessLayer;
 using DataAccessLayer.Entities;
-using DataAccessLayer.Models;
 using DataAccessLayer.Repository;
 using DataAccessLayer.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 
 namespace BusinessLayer.Service
@@ -14,10 +12,12 @@ namespace BusinessLayer.Service
     public class AppointmentService
     {
         private IAppointmentRepository AppointmentRepository;
+        private IPersonRepository PersonRepository;
 
         public AppointmentService(MedicalDBContext context)
         {
             AppointmentRepository = new AppointmentRepository(context);
+            PersonRepository = new PersonRepository(context);
         }
 
         public List<AppointmentModel> getAppointmentsByPerson(int personId)
@@ -32,13 +32,17 @@ namespace BusinessLayer.Service
 
         public AppointmentModel CreateAppointment(AppointmentModel appointment)
         {
+            var person = PersonRepository.GetById(appointment.PersonId);
+            if (person == null)
+                throw new ArgumentException("Person not found");
+
             var saved = AppointmentRepository.AddOrUpdate(new Appointment()
             {
-                ID=0,
+                ID=appointment.ID,
                 Date = appointment.Date,
                 Notes = appointment.Notes,
                 Confirmed = appointment.Confirmed,
-                PersonID = 1
+                PersonID = appointment.PersonId
             });
 
             return new AppointmentModel(saved);

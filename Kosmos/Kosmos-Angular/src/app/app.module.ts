@@ -12,7 +12,10 @@ import { routing } from './app.routes';
 import { UserService } from './shared/services/user.service';
 import { ConfigService } from './shared/utils/config.service';
 import { LoginFormComponent } from './account/login-form/login-form.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { KosmosInterceptor } from './shared/modules/interceptor';
 import { PatientPageComponent } from './patient-page.component';
+// import {PacientPrescriptionsPage}
 
 import {ReactiveFormsModule} from '@angular/forms';
 import {CdkTableModule} from '@angular/cdk/table';
@@ -58,6 +61,7 @@ import {
 } from '@angular/material';
 import { PatientAppointmentPage } from './patient-appointments.component';
 import { DialogAdd } from './dialog/add-appointment';
+import { PatientPrescriptionsPage } from './patient-prescriptions/patient-prescriptions.component';
 
 @NgModule({
   exports: [
@@ -106,6 +110,7 @@ export class DemoMaterialModule {}
     PatientPageComponent,
     PatientAppointmentPage,
     DialogAdd,
+    PatientPrescriptionsPage,
   ],
   imports: [
     BrowserModule,
@@ -117,9 +122,16 @@ export class DemoMaterialModule {}
     MatNativeDateModule,
     ReactiveFormsModule,
     FormsModule,
-    routing
+    FormsModule,
+    routing,
   ],
-  providers: [UserService,ConfigService],
+  providers: [
+    {
+        provide:HTTP_INTERCEPTORS,
+        useClass:KosmosInterceptor,
+        multi:true
+    },
+    UserService,ConfigService],
   bootstrap: [AppComponent],
   entryComponents: [DialogAdd]
 })

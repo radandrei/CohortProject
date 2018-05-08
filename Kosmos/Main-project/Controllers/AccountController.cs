@@ -8,14 +8,16 @@ using login_model.Models;
 using login_model.Models.AccountViewModels;
 using Kosmos.Controllers;
 using BusinessLayer.Service;
-using DataAccessLayer;
 using Kosmos.Helpers;
 using Kosmos.Models;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using Newtonsoft.Json;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
 using System.Linq;
 using BusinessLayer.Models;
+using DataAccessLayer;
 
 namespace MainProject.Controllers
 {
@@ -28,13 +30,15 @@ namespace MainProject.Controllers
         private MedicalDBContext _context;
         private readonly IJwtFactory _jwtFactory;
         private readonly JwtIssuerOptions _jwtOptions;
+        private readonly ClaimsPrincipal _caller;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             ILogger<AccountController> logger,
             MedicalDBContext context,
             IJwtFactory jwtFactory,
-            IOptions<JwtIssuerOptions> jwtOptions)
+            IOptions<JwtIssuerOptions> jwtOptions,
+            IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _logger = logger;
@@ -42,6 +46,7 @@ namespace MainProject.Controllers
             userService = new UserService(context);
             _jwtFactory = jwtFactory;
             _jwtOptions = jwtOptions.Value;
+            _caller = httpContextAccessor.HttpContext.User;
         }
 
         [TempData]
@@ -82,13 +87,6 @@ namespace MainProject.Controllers
 
         }
 
-        [HttpGet("[action]")]
-        [Authorize(Policy = "Patient")]
-        public IActionResult Register(string returnUrl = null)
-        {
-            return new OkObjectResult("Well played, friend");
-        }
-
         [HttpPost("register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody]RegisterViewModel model, string returnUrl = null)
@@ -99,7 +97,7 @@ namespace MainProject.Controllers
                 try
                 {
                     var x = userService.CreateUser(model.Username, model.Password);
-                    return new OkObjectResult("Account created");
+                    return new OkObjectResult(new { response = "Account created" });
                 }
                 catch (Exception ex)
                 {
@@ -123,117 +121,33 @@ namespace MainProject.Controllers
         //}
 
 
-
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ForgotPassword()
+        [HttpGet("testlogin")]
+        [Authorize(Policy = "Patient")]
+        public IActionResult TestLogin()
         {
-            return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
+            try
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToAction(nameof(ForgotPasswordConfirmation));
-                }
-
-                // For more information on how to enable account confirmation and password reset please
-                // visit https://go.microsoft.com/fwlink/?LinkID=532713
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                var currentUser = GetLoggedInUser();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            return new OkObjectResult("All peachy");
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ResetPassword(string code = null)
-        {
-            if (code == null)
-            {
-                throw new ApplicationException("A code must be supplied for password reset.");
-            }
-            var model = new ResetPasswordViewModel { Code = code };
-            return View(model);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction(nameof(ResetPasswordConfirmation));
-            }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction(nameof(ResetPasswordConfirmation));
-            }
-            AddErrors(result);
-            return View();
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
-
-
-        [HttpGet]
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
 
         #region Helpers
 
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-        }
 
-        private IActionResult RedirectToLocal(string returnUrl)
+        private UserModel GetLoggedInUser()
         {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
+            var userId = Int32.Parse(_caller.Claims.Single(c => c.Type == "id").Value);
+
+            var user = userService.GetUserById(userId);
+
+            return user;
         }
 
         private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
@@ -248,8 +162,8 @@ namespace MainProject.Controllers
 
             // check the credentials
 
-            return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(userName, userToVerify.ID, userToVerify.Role.Name));
-
+            var x = await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(userName, userToVerify.ID, userToVerify.Role.Name));
+            return x;
         }
 
         #endregion

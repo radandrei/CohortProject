@@ -5,4 +5,5 @@ export class Appointment{
     date:Date;
     confirm:boolean;
     notes:string;
+    personId: number;
 }

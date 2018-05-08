@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using FluentValidation.AspNetCore;
 
 namespace Kosmos
 {
@@ -48,9 +49,11 @@ namespace Kosmos
 
             services.AddDbContext<MedicalDBContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc();
+
+
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
+
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
@@ -89,6 +92,15 @@ namespace Kosmos
                 configureOptions.SaveToken = true;
             });
 
+            // api user claim policy
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrator", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.Administrator));
+                options.AddPolicy("Patient", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.Patient));
+                options.AddPolicy("Doctor", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.Doctor));
+                options.AddPolicy("Assistant", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.Assistant));
+            });
+
             var builder = services.AddIdentityCore<ApplicationUser>(o =>
             {
                 // configure identity options
@@ -100,15 +112,8 @@ namespace Kosmos
             });
             builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
             builder.AddEntityFrameworkStores<MedicalDBContext>().AddDefaultTokenProviders();
-
-            // api user claim policy
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Administrator", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.Administrator));
-                options.AddPolicy("Patient", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.Patient));
-                options.AddPolicy("Doctor", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.Doctor));
-                options.AddPolicy("Assistant", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Role, Constants.Strings.JwtClaims.Assistant));
-            });
+            
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
         }
 

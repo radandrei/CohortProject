@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BusinessLayer.Models;
 using BusinessLayer.Service;
 using DataAccessLayer;
-using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,24 +27,22 @@ namespace Main_Project.Controllers
         }
 
         [HttpGet("[action]/{id}")]
+        [Authorize(Policy = "Patient")]
         public IActionResult GetByPerson(int id)
         {
             var item = AppointmentService.getAppointmentsByPerson(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+
             return new ObjectResult(item);
         }
 
         [HttpPost("[action]")]
-        [AllowAnonymous]
+        [Authorize(Policy = "Patient")]
         public IActionResult Add([FromBody]AppointmentModel model)
         {
             try
             {
                 var x = AppointmentService.CreateAppointment(model);
-                return new OkObjectResult("Appointment created");
+                return new OkObjectResult(x);
             }
             catch (Exception ex)
             {
@@ -64,7 +59,7 @@ namespace Main_Project.Controllers
                 AppointmentService.DeleteAppointment(id);
                 return new OkObjectResult("Appointment deleted");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new BadRequestObjectResult(e);
             }
