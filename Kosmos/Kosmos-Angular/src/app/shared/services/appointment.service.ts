@@ -50,5 +50,9 @@ export class AppointmentService {
     return this.http.get<Appointment[]>(this.AppointmentUrl + "/getbyperson/" + id);
   }
 
+  getAllAppointments(id: number | string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(this.AppointmentUrl + "/getallbyperson/" + id);
+  }
+
 }
 

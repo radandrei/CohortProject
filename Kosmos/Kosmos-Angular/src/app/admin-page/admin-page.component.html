@@ -37,6 +37,7 @@
     <mat-cell *cdkCellDef="let row"> 
       <button mat-button *ngIf="isDoctor(row.role.name)" [routerLink]="['/admin-appointment', row.person.id]" style="background-color:#a319be;;color:white;display: inline-block;">Appointments</button>  
       <button mat-button *ngIf="isPatient(row.role.name)" [routerLink]="['/admin-history', row.person.id]" style="background-color:#a319be;;color:white;display: inline-block;">MedicalChartHistory</button>
+      <button mat-button *ngIf="isDoctor(row.role.name)" (click)="deleteDoctor(row.id)" style="background-color:#a319be;;color:white;display: inline-block;">Delete</button>
     </mat-cell>
   </ng-container>
 
