@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BusinessLayer.Models;
 using BusinessLayer.Service;
 using DataAccessLayer;
+using MainProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +14,13 @@ namespace Main_Project.Controllers
     {
         private readonly AppointmentService AppointmentService;
         private MedicalDBContext _context;
+        private readonly UserService userService;
 
         public AppointmentController(MedicalDBContext context)
         {
             _context = context;
             this.AppointmentService = new AppointmentService(context);
+            this.userService = new UserService(context);
         }
 
         [HttpGet]
@@ -35,14 +38,37 @@ namespace Main_Project.Controllers
             return new ObjectResult(item);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("[action]")]
         [AllowAnonymous]
         public IActionResult GetCabinets()
         {
-            List<CabinetModel> item = AppointmentService.GetCabinets();
+            try
+            {
+                List<CabinetModel> item = AppointmentService.GetCabinets();
+                return new OkObjectResult(item);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
         }
 
-        
+        [HttpPost("[action]")]
+        [AllowAnonymous]
+        public IActionResult AddMedic([FromBody]MedicModel model)
+        {
+            try
+            {
+                var userId = userService.CreateUser(model.Username, model.password,3).ID;
+                userService.CreatePerson(userId,model.CabinetId, model.FirstName,model.LastName);
+                return new OkObjectResult(true);
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestObjectResult(false);
+            }
+        }
+
         [HttpGet("[action]/{id}")]
         [AllowAnonymous]
         public IActionResult GetAllByPerson(int id)

@@ -15,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 import { User } from '../models/user';
+import { DialogAddMedic } from '../dialog/add-medic';
 
 @Component({
   selector: 'admin',
@@ -36,6 +37,14 @@ export class AdminPage {
 
   constructor(http: HttpClient, private UserService: UserService, public dialog: MatDialog, private router:Router) {
     this.database = new Database(http, this.UserService,router);
+  }
+
+
+  openDialog() {
+
+    let dialogRef;
+    dialogRef = this.dialog.open(DialogAddMedic, { width: '25%', height: '40%' });
+
   }
 
   dateToString(date: Date): string {

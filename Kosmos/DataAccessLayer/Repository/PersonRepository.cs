@@ -19,7 +19,29 @@ namespace DataAccessLayer.Repository
 
         public Person AddOrUpdate(Person entity)
         {
-            throw new NotImplementedException();
+            var person = context.Persons.FirstOrDefault(x => x.Id == entity.Id);
+
+            if (person == null)
+            {
+                person = new Person(entity);
+                context.Add(person);
+            }
+
+            else
+            {
+                person.FirstName = entity.FirstName;
+                person.LastName = entity.LastName;
+                person.CabinetID = entity.CabinetID;
+                person.MedicalChartID = entity.MedicalChartID;
+                person.PersonalDataID = entity.PersonalDataID;
+                person.Active = entity.Active;
+                person.UserId = entity.UserId;
+                context.Persons.Update(person);
+            }
+
+            context.SaveChanges();
+
+            return person;
         }
 
         public void Delete(int Id)

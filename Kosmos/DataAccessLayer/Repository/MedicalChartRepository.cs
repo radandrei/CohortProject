@@ -18,7 +18,26 @@ namespace DataAccessLayer.Repository
 
         public MedicalChart AddOrUpdate(MedicalChart entity)
         {
-            throw new NotImplementedException();
+            var medicalChart = context.MedicalCharts.FirstOrDefault(x => x.ID == entity.ID);
+
+            if (medicalChart == null)
+            {
+                medicalChart = new MedicalChart()
+                {
+                    Notes = entity.Notes,
+                    CreationDate = entity.CreationDate
+                };
+                context.MedicalCharts.Add(medicalChart);
+            }
+            else
+            {
+                medicalChart.CreationDate = entity.CreationDate;
+                medicalChart.Notes = entity.Notes;
+                context.MedicalCharts.Update(medicalChart);
+            }
+
+            context.SaveChanges();
+            return medicalChart;
         }
 
         public void Delete(int Id)

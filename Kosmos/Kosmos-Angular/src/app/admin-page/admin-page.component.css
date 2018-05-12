@@ -19,6 +19,15 @@
     color:white;
 }
 
+.add-button>button{
+    left:5%;
+    position:relative;
+    text-align: center;
+    background-color:rgb(115, 26, 133);
+    color:white;
+}
+
+
 .menu{
     list-style: none;
     margin: 0;

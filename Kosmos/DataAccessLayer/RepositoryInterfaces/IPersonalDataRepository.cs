@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccessLayer.RepositoryInterfaces
 {
-    public interface IMedicalChartRepository: IBaseRepository<MedicalChart>
+    public interface IPersonalDataRepository : IBaseRepository<PersonalData>
     {
     }
 }

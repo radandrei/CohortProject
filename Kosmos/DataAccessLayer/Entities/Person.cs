@@ -6,6 +6,22 @@ namespace DataAccessLayer.Entities
 {
     public class Person
     {
+        public Person()
+        {
+        }
+
+        public Person(Person entity)
+        {
+            this.Id = entity.Id;
+            this.Active = entity.Active;
+            this.FirstName = entity.FirstName;
+            this.LastName = entity.LastName;
+            this.CabinetID = entity.CabinetID;
+            this.PersonalDataID = entity.PersonalDataID;
+            this.MedicalChartID = entity.MedicalChartID;
+            this.UserId = entity.UserId;
+        }
+
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
