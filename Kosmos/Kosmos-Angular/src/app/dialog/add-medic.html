@@ -1,0 +1,32 @@
+<mat-dialog-content>
+    <fieldset>
+        Username:
+        <input #username type="text" style="margin-left:3px;border-top:0px;border-left:0px;border-right:0px;" />
+        <br>
+        <br> Password:
+        <input #password type="password" style="margin-left:3px;border-top:0px;border-left:0px;border-right:0px;" />
+        <br>
+        <br>First Name:
+        <input #firstName type="text" style="margin-left:3px;border-top:0px;border-left:0px;border-right:0px;" />
+        <br>
+        <br>
+        Last Name:
+        <input #lastName type="text" style="margin-left:3px;border-top:0px;border-left:0px;border-right:0px;" />
+        <br>
+        <br>
+        <mat-form-field>
+            <mat-select placeholder="Cabinet" [(ngModel)]="selectedCabinet" name="cabinet">
+              <mat-option *ngFor="let cabinet of cabinets" [value]="cabinet.id">
+                {{cabinet.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </fieldset>
+    <br>
+    <br>
+
+    <button type='submit' mat-dialog-close="Submit" (click)='add(username.value,password.value,firstName.value,lastName.value)'>Add</button>
+    <button type='submit' mat-dialog-close="Cancel" (click)='cancel()'>Cancel</button>
+    <br>
+    <br>
+</mat-dialog-content>

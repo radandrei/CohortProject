@@ -8,6 +8,8 @@ namespace DataAccessLayer.Entities
     {
         public int ID { get; set; }
         public string DoctorPosition { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
 
         public ICollection<Person> People { get; set; }
     }

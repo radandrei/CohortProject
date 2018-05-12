@@ -35,6 +35,15 @@ namespace Main_Project.Controllers
             return new ObjectResult(item);
         }
 
+        [HttpGet("[action]/{id}")]
+        [AllowAnonymous]
+        public IActionResult GetCabinets()
+        {
+            List<CabinetModel> item = AppointmentService.GetCabinets();
+
+            return new ObjectResult(item);
+        }
+
         [HttpPost("[action]")]
         [Authorize(Policy = "Patient")]
         public IActionResult Add([FromBody]AppointmentModel model)

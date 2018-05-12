@@ -9,21 +9,19 @@ namespace BusinessLayer.Models
     public class CabinetModel
     {
         public int ID { get; set; }
-
-        //public ICollection<MedicalDataModel> MedicalData { get; set; }
-
-        //public ICollection<PersonModel> People { get; set; }
-
+        public string DoctorPosition { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        
         public CabinetModel(Cabinet cabinet)
         {
-            if(cabinet!=null)
+            if (cabinet != null)
+            {
                 ID = cabinet.ID;
-            //MedicalData = new Collection<MedicalDataModel>();
-            //foreach(MedicalData MD in cabinet.MedicalData)
-            //{
-            //    MedicalData.Add(new MedicalDataModel(MD));
-            //}
-
+                DoctorPosition = cabinet.DoctorPosition;
+                Name = cabinet.Name;
+                Address = cabinet.Address;
+            }
         }
     }
 }

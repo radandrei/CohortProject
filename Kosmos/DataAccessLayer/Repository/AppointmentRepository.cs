@@ -80,6 +80,11 @@ namespace DataAccessLayer.Repository
         {
             return context.Appointments.Where(x => x.PersonID == personId && DateTime.Compare(x.Date,DateTime.Now)>0).ToList();
         }
+
+        public List<Cabinet> GetCabinets()
+        {
+            return context.Cabinets.ToList();
+        }
     }
 }
 

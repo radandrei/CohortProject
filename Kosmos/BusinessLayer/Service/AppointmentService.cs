@@ -5,7 +5,7 @@ using DataAccessLayer.Repository;
 using DataAccessLayer.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace BusinessLayer.Service
 {
@@ -46,6 +46,15 @@ namespace BusinessLayer.Service
             });
 
             return new AppointmentModel(saved);
+        }
+
+        public List<CabinetModel> GetCabinets()
+        {
+            List<Cabinet> cabinets = AppointmentRepository.GetCabinets();
+
+            var returnList = cabinets.Select(x => new CabinetModel(x)).ToList();
+
+            return returnList;
         }
 
         public void DeleteAppointment(int id)

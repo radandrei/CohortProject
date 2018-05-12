@@ -5,13 +5,14 @@ import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { Appointment } from '../../models/Appointment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Cabinet } from '../../models/cabinet';
+import { Medic } from '../../models/medic';
 
 
 
 @Injectable()
 
 export class AppointmentService {
-
   baseUrl: string = '';
   AppointmentUrl;
 
@@ -25,6 +26,10 @@ export class AppointmentService {
     return result.json();
   }
 
+  getCabinets(): Observable<Cabinet[]> {
+    return this.http.get<Cabinet[]>(this.AppointmentUrl + "/getCabinets");
+  }
+
   add(body): Observable<Appointment> {
 
     const httpOptions = {
@@ -33,6 +38,13 @@ export class AppointmentService {
 
     return this.http.post<Appointment>(this.AppointmentUrl + "/add", body, httpOptions);
 
+  }
+
+  addMedic(medic: Medic): Observable<boolean> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.post<boolean>(this.AppointmentUrl + "/addMedic", medic, httpOptions);
   }
 
   loginFailed(error: any): Promise<boolean> {
