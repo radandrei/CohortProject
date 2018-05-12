@@ -10,5 +10,6 @@ namespace DataAccessLayer.RepositoryInterfaces
     {
         List<Appointment> GetAllByPerson(int personId);
         List<Cabinet> GetCabinets();
+        List<Appointment> GetByPerson(int personId);
     }
 }

@@ -76,7 +76,7 @@ namespace DataAccessLayer.Repository
             return j;
         }
 
-        public List<Appointment> GetAllByPerson(int personId)
+        public List<Appointment> GetByPerson(int personId)
         {
             return context.Appointments.Where(x => x.PersonID == personId && DateTime.Compare(x.Date,DateTime.Now)>0).ToList();
         }
@@ -84,6 +84,11 @@ namespace DataAccessLayer.Repository
         public List<Cabinet> GetCabinets()
         {
             return context.Cabinets.ToList();
+        }
+        
+        public List<Appointment> GetAllByPerson(int personId)
+        {
+            return context.Appointments.Where(x => x.PersonID == personId).ToList();
         }
     }
 }

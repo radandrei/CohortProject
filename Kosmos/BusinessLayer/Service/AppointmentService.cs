@@ -23,6 +23,16 @@ namespace BusinessLayer.Service
         public List<AppointmentModel> getAppointmentsByPerson(int personId)
         {
             List<AppointmentModel> AppointmentList = new List<AppointmentModel>();
+            List<Appointment> returnList = AppointmentRepository.GetByPerson(personId);
+            foreach (Appointment appointment in returnList)
+                AppointmentList.Add(new AppointmentModel(appointment));
+            return AppointmentList;
+
+        }
+
+        public List<AppointmentModel> getAllAppointmentsByPerson(int personId)
+        {
+            List<AppointmentModel> AppointmentList = new List<AppointmentModel>();
             List<Appointment> returnList = AppointmentRepository.GetAllByPerson(personId);
             foreach (Appointment appointment in returnList)
                 AppointmentList.Add(new AppointmentModel(appointment));

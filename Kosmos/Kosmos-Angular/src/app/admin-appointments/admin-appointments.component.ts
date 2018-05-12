@@ -56,7 +56,7 @@ export class AdminAppointmentPage {
     var month = currentTime.getMonth();
     var day = currentTime.getDate();
     var year = currentTime.getFullYear();
-    var retdate = day + "." + month + "." + year;
+    var retdate = day + "." + (month+1) + "." + year;
     return retdate;
   }
 
@@ -128,7 +128,7 @@ export class Database {
       this.activatedRoute.params.subscribe((params: Params) => {
         let personId = params['id'];
         console.log(personId);
-        AppointmentService.getAppointments(personId)
+        AppointmentService.getAllAppointments(personId)
       .subscribe(
         appointments => { this.addAppointments(appointments) },
         error => {
@@ -171,8 +171,8 @@ export class DataSourceAppointment extends DataSource<any> {
   get dateStart(): Date { return this._dateStartChange.value; }
   set dateStart(date: Date) { this._dateStartChange.next(date); }
 
-  get dateEnd(): Date { return this._dateStartChange.value; }
-  set dateEnd(date: Date) { this._dateStartChange.next(date); }
+  get dateEnd(): Date { return this._dateEndChange.value; }
+  set dateEnd(date: Date) { this._dateEndChange.next(date); }
 
   constructor(private _database: Database, private _paginator: MatPaginator, private _sort: MatSort) {
     super();
@@ -195,26 +195,34 @@ export class DataSourceAppointment extends DataSource<any> {
       const elements = this._database.data.filter((item: Appointment) => {
         let searchStr = (item.notes).toLowerCase();
 
-        console.log(this.dateEnd);
-        console.log(this.dateStart);
+        
 
         let boolStart;
         let boolEnd;
+
+        let date=new Date(item.date);
+        console.log(date);
+        console.log(item.date);
+
         if(this.dateStart==null)
           boolStart=true;
-        else
-          if(this.dateStart<=item.date)
+        else{
+          if(this.dateStart.getTime()<=date.getTime())
             boolStart=true;
           else
             boolStart=false;
+        }
 
-            if(this.dateEnd==null)
+
+        if(this.dateEnd==null)
             boolEnd=true;
-          else
-            if(this.dateEnd<=item.date)
+          else{
+            if(this.dateEnd.getTime()>=date.getTime())
               boolEnd=true;
             else
               boolEnd=false;
+          }
+      
         
         return (searchStr.indexOf(this.filter.toLowerCase()) != -1 && boolStart&&boolEnd);
       });
@@ -233,7 +241,7 @@ export class DataSourceAppointment extends DataSource<any> {
 
       switch (this._sort.active) {
         case 'confirmed': [propertyA, propertyB] = [(a.confirm), (b.confirm)]; break;
-        case 'date': [propertyA, propertyB] = [(a.date), (b.date)]; break;
+        case 'date': [propertyA, propertyB] = [(new Date(a.date).getTime()), (new Date(b.date).getTime())]; break;
         case 'notes': [propertyA, propertyB] = [(a.notes).toLowerCase(), (b.notes).toLowerCase()]; break;
       }
 

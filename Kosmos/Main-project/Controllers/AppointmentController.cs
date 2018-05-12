@@ -27,7 +27,7 @@ namespace Main_Project.Controllers
         }
 
         [HttpGet("[action]/{id}")]
-        [AllowAnonymous]
+        [Authorize(Policy = "Patient")]
         public IActionResult GetByPerson(int id)
         {
             var item = AppointmentService.getAppointmentsByPerson(id);
@@ -40,6 +40,14 @@ namespace Main_Project.Controllers
         public IActionResult GetCabinets()
         {
             List<CabinetModel> item = AppointmentService.GetCabinets();
+        }
+
+        
+        [HttpGet("[action]/{id}")]
+        [AllowAnonymous]
+        public IActionResult GetAllByPerson(int id)
+        {
+            var item = AppointmentService.getAllAppointmentsByPerson(id);
 
             return new ObjectResult(item);
         }
