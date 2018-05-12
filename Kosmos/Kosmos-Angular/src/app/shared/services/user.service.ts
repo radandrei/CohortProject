@@ -112,5 +112,9 @@ export class UserService extends BaseService {
       .catch(this.handlePromiseError)
   }
 
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.userUrl+"/getall");
+  }
+
 }
 

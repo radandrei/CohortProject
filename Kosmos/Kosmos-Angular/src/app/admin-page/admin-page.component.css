@@ -11,15 +11,6 @@
     z-index: 1;
 }
 
-.add-button>button{
-    left:5%;
-    position:relative;
-    text-align: center;
-    background-color:rgb(115, 26, 133);
-    color:white;
-}
-
-
 .logout-button{
     top:25%;
     right:4%;
@@ -68,11 +59,15 @@
     color: #ddeeee;
 }
 
-
+.menu>button{
+    background-color:rgb(115, 26, 133);
+}
 
 /* Structure */
 .container {
     display: flex;
+    position:relative;
+    top:100px;
     flex-direction: column;
     max-height: 700px;
     min-width: 300px;

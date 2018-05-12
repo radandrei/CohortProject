@@ -27,7 +27,7 @@ namespace Main_Project.Controllers
         }
 
         [HttpGet("[action]/{id}")]
-        [Authorize(Policy = "Patient")]
+        [AllowAnonymous]
         public IActionResult GetByPerson(int id)
         {
             var item = AppointmentService.getAppointmentsByPerson(id);

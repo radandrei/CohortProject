@@ -12,8 +12,11 @@ namespace DataAccessLayer.Entities
 
         public PersonalDataModel(PersonalData personalData)
         {
-            ID = personalData.ID;
-            Birthdate = personalData.Birthdate;
+            if (personalData != null)
+            {
+                ID = personalData.ID;
+                Birthdate = personalData.Birthdate;
+            }
         }
     }
 }

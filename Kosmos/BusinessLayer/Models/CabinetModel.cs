@@ -16,7 +16,8 @@ namespace BusinessLayer.Models
 
         public CabinetModel(Cabinet cabinet)
         {
-            ID = cabinet.ID;
+            if(cabinet!=null)
+                ID = cabinet.ID;
             //MedicalData = new Collection<MedicalDataModel>();
             //foreach(MedicalData MD in cabinet.MedicalData)
             //{

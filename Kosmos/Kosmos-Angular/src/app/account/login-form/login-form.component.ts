@@ -47,8 +47,8 @@ export class LoginFormComponent {
         if (user.role.name == "Patient") {
           this.router.navigateByUrl("patient");
         }
-        if (user.role.name == "ROLE_USER") {
-          this.router.navigateByUrl("user-page");
+        if (user.role.name == "Administrator") {
+          this.router.navigateByUrl("admin");
         }
         if (user.role.name == "ROLE_REPRESENTANT") {
           this.router.navigateByUrl("representant-page");

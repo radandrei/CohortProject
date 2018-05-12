@@ -1,0 +1,53 @@
+<div class="header-part">
+  <div class="logout-button">
+    <button type=submit mat-button (click)='logout()'> Logout ({{user.username}}) </button>
+  </div>
+
+
+
+<div class="container mat-elevation-z8">
+  <div class="header">
+  <mat-input-container floatPlaceholder="never">
+    <input matInput #filter placeholder="Filter prescriptions">
+  </mat-input-container>
+</div>
+<mat-table #table [dataSource]="dataSource" matSort>
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  
+  <ng-container cdkColumnDef="firstName">
+    <mat-header-cell *cdkHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.person.firstName}} </mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="lastName">
+    <mat-header-cell *cdkHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.person.lastName}} </mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="roleName">
+    <mat-header-cell *cdkHeaderCellDef mat-sort-header> Role </mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.role.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="actions">
+    <mat-header-cell *cdkHeaderCellDef>Actions</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> 
+      <button mat-button *ngIf="isDoctor(row.role.name)" [routerLink]="['/admin-appointment', row.person.id]" style="background-color:#a319be;;color:white;display: inline-block;">Appointments</button>  
+      <button mat-button *ngIf="isPatient(row.role.name)" [routerLink]="['/admin-history', row.person.id]" style="background-color:#a319be;;color:white;display: inline-block;">MedicalChartHistory</button>
+    </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #paginator
+              [length]="dataSource.filterLength"
+              [pageIndex]="0"
+              [pageSize]="25"
+              [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+</div>
