@@ -60,7 +60,7 @@ namespace BusinessLayer
 
         public List<User> GetAll()
         {
-            return context.Users.Include(z => z.Role).AsNoTracking().ToList();
+            return context.Users.Include(z => z.Role).Include(z=>z.Person).Include(z=>z.Person.Cabinet).AsNoTracking().ToList();
         }
 
         public User GetById(int id)

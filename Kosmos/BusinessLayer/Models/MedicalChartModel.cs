@@ -16,9 +16,12 @@ namespace BusinessLayer.Models
 
         public MedicalChartModel(MedicalChart medicalChart)
         {
-            ID = medicalChart.ID;
-            CreationDate = medicalChart.CreationDate;
-            Notes = medicalChart.Notes;
+            if (medicalChart != null)
+            {
+                ID = medicalChart.ID;
+                CreationDate = medicalChart.CreationDate;
+                Notes = medicalChart.Notes;
+            }
 
        
 

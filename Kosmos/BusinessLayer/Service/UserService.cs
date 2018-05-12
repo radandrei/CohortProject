@@ -65,5 +65,12 @@ namespace BusinessLayer.Service
                 return new UserModel(user);
             return null;
         }
+
+        public List<UserModel> getAllUsers()
+        {
+            var users = userRepository.GetAll();
+            var returnList = users.Select(x => new UserModel(x)).ToList();
+            return returnList;
+        }
     }
 }
