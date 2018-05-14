@@ -50,8 +50,8 @@ export class LoginFormComponent {
         if (user.role.name == "Administrator") {
           this.router.navigateByUrl("admin");
         }
-        if (user.role.name == "ROLE_REPRESENTANT") {
-          this.router.navigateByUrl("representant-page");
+        if (user.role.name == "Medic") {
+          this.router.navigateByUrl("medic");
         }
         localStorage.setItem('myUser', JSON.stringify(user));
       });

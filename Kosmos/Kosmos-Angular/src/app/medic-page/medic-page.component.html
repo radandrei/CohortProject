@@ -1,0 +1,22 @@
+<div class="header-part">
+  <div class="logout-button">
+    <button type=submit mat-button (click)='logout()'> Logout ({{user.username}}) </button>
+  </div>
+  <div class="menu">
+    <ul>
+      <li><a href="../doctor-appointments">Appointments</a></li>
+    </ul>
+</div>
+
+<div class="mychart">
+
+<div class="prsinfo">
+  <mat-list>
+      <h3 matSubheader>First Name:{{user.person.firstName}}</h3>
+      <h3 matSubheader>Last Name:{{user.person.lastName}}</h3>
+      <h3 matSubheader>Date of birth:{{dateToString(user.person.personalData?.birthdate)}}</h3>
+      <mat-divider></mat-divider>
+    </mat-list>
+</div>
+</div>
+</div>

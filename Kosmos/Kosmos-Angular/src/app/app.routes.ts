@@ -8,7 +8,8 @@ import { PatientAppointmentPage } from './patient-appointments.component';
 import { PatientPrescriptionsPage } from './patient-prescriptions/patient-prescriptions.component';
 import { AdminPage } from './admin-page/admin-page.component';
 import { AdminAppointmentPage } from './admin-appointments/admin-appointments.component';
-
+import {MedicPageComponent} from './medic-page/medic-page.component';
+import {DoctorAppointmentsComponent} from './doctor-appointments/doctor-appointments.component';
 const appRoutes: Routes = [
   { path: 'register', component: RegistrationFormComponent },
   { path: 'login', component: LoginFormComponent },
@@ -16,6 +17,8 @@ const appRoutes: Routes = [
   {path:'patient-appointment',component:PatientAppointmentPage},
   {path:'patient-prescriptions',component:PatientPrescriptionsPage},
   {path:'admin',component:AdminPage},
+  {path:'medic', component:MedicPageComponent},
+  {path: 'doctor-appointments', component: DoctorAppointmentsComponent},
   {path:'admin-appointment/:id',component:AdminAppointmentPage},
   {path:"**",component:LoginFormComponent}
 ];
