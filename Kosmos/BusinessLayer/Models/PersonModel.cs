@@ -15,6 +15,7 @@ namespace BusinessLayer.Models
         public bool Active { get; set; }
 
         public MedicalChartModel MedicalChart { get; set; }
+        public int MedicalChartID { get; set; }
         public CabinetModel Cabinet { get; set; }
         public PersonalDataModel PersonalData { get; set; }
 
@@ -28,6 +29,7 @@ namespace BusinessLayer.Models
             LastName = person.LastName;
             Active = person.Active;
             MedicalChart=new MedicalChartModel(person.MedicalChart);
+            MedicalChartID = person.MedicalChartID;
             Cabinet = new CabinetModel(person.Cabinet);
             PersonalData = new PersonalDataModel(person.PersonalData);
 
