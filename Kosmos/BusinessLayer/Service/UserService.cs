@@ -10,7 +10,6 @@ using System.Text;
 using System.Linq;
 using DataAccessLayer.RepositoryInterfaces;
 using DataAccessLayer.Repository;
-using DataAccessLayer.Utils;
 
 namespace BusinessLayer.Service
 {
@@ -79,17 +78,6 @@ namespace BusinessLayer.Service
         {
             var users = userRepository.GetAll();
             var returnList = users.Select(x => new UserModel(x)).ToList();
-            return returnList;
-        }
-
-        public List<UserModel> getAllPatients(int doctorId)
-        {
-            var doctor = userRepository.GetAll().SingleOrDefault(a=>a.Person.UserId == doctorId);
-            if (doctor == null)
-                return null;
-            var doctorCabinetId = doctor.Person.CabinetID;
-            var users = userRepository.GetAll();
-            var returnList = users.Where(a=>a.Person.Cabinet.ID == doctorCabinetId && a.Role.Id ==(int)RoleEnum.Patient).Select(x => new UserModel(x)).ToList();
             return returnList;
         }
 
