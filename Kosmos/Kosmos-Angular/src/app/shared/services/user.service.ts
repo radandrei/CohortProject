@@ -116,5 +116,9 @@ export class UserService extends BaseService {
     return this.http.get<User[]>(this.userUrl+"/getall");
   }
 
+  getPatients(doctorId): Observable<User[]> {
+    return this.http.get<User[]>(this.userUrl+"/getallpatients?id="+doctorId);
+  }
+
 }
 

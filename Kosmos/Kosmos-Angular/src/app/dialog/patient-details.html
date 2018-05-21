@@ -1,0 +1,27 @@
+<div class="prsinfo">
+  <mat-list>
+      <h3 matSubheader>First Name:{{firstName}}</h3>
+      <h3 matSubheader>Last Name:{{lastName}}</h3>
+      <mat-divider></mat-divider>
+    </mat-list>
+</div>
+
+
+  <mat-list>
+   <h3 matSubheader><mat-icon matListIcon>security</mat-icon> Allergies </h3>
+    <mat-list-item *ngFor="let allergy of allergies">
+       <h4 matLine>{{allergy.allergicReaction.name}}</h4>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <h3 matSubheader><mat-icon matListIcon>do_not_disturb_on</mat-icon> Contraindications</h3>
+    <mat-list-item *ngFor="let contraindication of contraindications">
+       <h4 matLine>{{contraindication.medicine.name}}</h4>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <h3 matSubheader><mat-icon matListIcon>event </mat-icon> Events</h3>
+    <mat-list-item *ngFor="let event of events">
+       <h4 matLine>{{event.name}}</h4>
+       <p matLine class="demo-2"> {{event.type.name}} </p>
+       <p matLine class="demo-2"> {{event.observations}} </p>
+    </mat-list-item>
+ </mat-list>

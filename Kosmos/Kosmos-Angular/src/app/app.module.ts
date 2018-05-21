@@ -65,6 +65,9 @@ import { PatientPrescriptionsPage } from './patient-prescriptions/patient-prescr
 import { AdminPage } from './admin-page/admin-page.component';
 import { AdminAppointmentPage } from './admin-appointments/admin-appointments.component';
 import { DialogAddMedic } from './dialog/add-medic';
+import { MedicPageComponent } from './medic-page/medic-page.component';
+import { DoctorAppointmentsComponent } from './doctor-appointments/doctor-appointments.component';
+import { DialogPatientDetails } from './dialog/patient-details';
 
 @NgModule({
   exports: [
@@ -102,6 +105,7 @@ import { DialogAddMedic } from './dialog/add-medic';
     MatToolbarModule,
     MatTooltipModule,
   ],
+  declarations: [],
 })
 export class DemoMaterialModule {}
 
@@ -111,12 +115,15 @@ export class DemoMaterialModule {}
     RegistrationFormComponent,
     LoginFormComponent,
     PatientPageComponent,
+    MedicPageComponent,
     PatientAppointmentPage,
     DialogAdd,
     DialogAddMedic,
+    DialogPatientDetails,
     PatientPrescriptionsPage,
     AdminPage,
-    AdminAppointmentPage
+    AdminAppointmentPage,
+    DoctorAppointmentsComponent
   ],
   imports: [
     BrowserModule,
@@ -139,6 +146,6 @@ export class DemoMaterialModule {}
     },
     UserService,ConfigService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogAdd, DialogAddMedic]
+  entryComponents: [DialogAdd, DialogAddMedic, DialogPatientDetails]
 })
 export class AppModule { }

@@ -28,7 +28,7 @@ namespace Main_Project.Controllers
         }
 
         [HttpGet("[action]/{id}")]
-        [Authorize(Policy ="Patient")]
+        //[Authorize(Policy ="Patient")]
         public IActionResult GetByMedicalChart(int id)
         {
             var item = EventService.getEventsByMedicalChart(id);
