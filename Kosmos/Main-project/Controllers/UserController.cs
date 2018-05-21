@@ -48,15 +48,5 @@ namespace Main_Project.Controllers
             }
             return new ObjectResult(item);
         }
-        [HttpGet("[action]")]
-        public IActionResult GetAllPatients(int id)
-        {
-            var item = userService.getAllPatients(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return new ObjectResult(item);
-        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using DataAccessLayer.Entities;
 using DataAccessLayer.RepositoryInterfaces;
-using DataAccessLayer.Utils;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -89,14 +88,6 @@ namespace DataAccessLayer.Repository
         
         public List<Appointment> GetAllByPerson(int personId)
         {
-            var user = context.Users.Include(a=>a.Role).Include(a=>a.Person).Single(a => a.Id == personId);
-            var isMedic = user.Role.Id == (int)RoleEnum.Medic;
-            if (isMedic)
-            {
-                var appointments = context.Persons.Where(a => a.CabinetID == user.Person.CabinetID && a.User.Role.Id == (int)RoleEnum.Patient).SelectMany(a => a.Appointments);
-                var now = DateTime.Now.Date;
-                return appointments.Where(a=>a.Date.Date >= now).OrderBy(a=>a.Date).ToList();
-            }
             return context.Appointments.Where(x => x.PersonID == personId).ToList();
         }
     }

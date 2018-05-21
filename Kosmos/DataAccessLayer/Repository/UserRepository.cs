@@ -66,7 +66,8 @@ namespace BusinessLayer
         public User GetById(int id)
         {
             return context.Users.Where(x => x.Id == id).Include(z => z.Role).Include(y => y.Person).Include(a => a.Person.PersonalData)
-                .Include(b => b.Person.MedicalChart).Include(c => c.Person.Cabinet).FirstOrDefault();
+                .Include(b => b.Person.MedicalChart).Include(c => c.Person.Cabinet)
+                .AsNoTracking().FirstOrDefault();
         }
 
         public User GetByUsername(string username)
