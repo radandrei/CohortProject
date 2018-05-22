@@ -24,7 +24,7 @@ export class DialogAdd {
 
     var completeDate: Date = new Date(date);
     if (completeDate < new Date()) {
-      alert("The appointments was not created.It must take place in the future!");
+      alert("The appointment was not created.It must take place in the future!");
       return "error";
     }
     var tmz = completeDate.getTimezoneOffset();

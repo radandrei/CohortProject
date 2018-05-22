@@ -1,70 +1,77 @@
 <div class="header-part">
-        <div class="logout-button">
-          <button type=submit mat-button (click)='logout()'> Logout ({{user.username}}) </button>
-        </div>
-        <div class="menu">
-          <ul>
-            <li><a href="/patient" >MyChart</a></li>
-            <li><a href="../patient-appointment">Appointments</a></li>
-            <li><a href="../patient-prescriptions">Prescriptions</a></li>
-          </ul>
-      </div>
+  <div class="logout-button">
+    <button type=submit mat-button (click)='logout()'> Logout ({{user.username}}) </button>
+  </div>
+  <div class="menu">
+    <ul>
+      <li>
+        <a href="/patient">MyChart</a>
+      </li>
+      <li>
+        <a href="../patient-appointment">Appointments</a>
+      </li>
+      <li>
+        <a href="../patient-prescriptions">Prescriptions</a>
+      </li>
+    </ul>
+  </div>
 
-<br><br><br>
+  <br>
+  <br>
+  <br>
 
-<div class="add-button" >
+  <div class="add-button">
     <button mat-button (click)="openDialog()">Add Appointment</button>
-</div>
+  </div>
 
-<br>
+  <br>
 
-<div class="container mat-elevation-z8">
-        <div class="header">
-        <mat-input-container floatPlaceholder="never">
-          <input matInput #filter placeholder="Filter appointments">
-        </mat-input-container>
-      </div>
-      <mat-table #table [dataSource]="dataSource" matSort>
-    
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-    
-        
-        <ng-container cdkColumnDef="date">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header> Date </mat-header-cell>
-          <mat-cell *cdkCellDef="let row"> {{dateToString(row.date)}} </mat-cell>
-        </ng-container>
-
-        <ng-container cdkColumnDef="time">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header> Time </mat-header-cell>
-          <mat-cell *cdkCellDef="let row"> {{dateToHour(row.date)}} </mat-cell>
-        </ng-container>
-    
-        <ng-container cdkColumnDef="notes">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header> Notes </mat-header-cell>
-          <mat-cell *cdkCellDef="let row"> {{row.notes}} </mat-cell>
-        </ng-container>
-    
-     
-         <ng-container cdkColumnDef="confirmed">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header> Confirmed </mat-header-cell>
-          <mat-cell *cdkCellDef="let row"> {{isConfirmed(row.confirmed)}} </mat-cell>
-        </ng-container>
-
-        <ng-container cdkColumnDef="cancel">
-                <mat-header-cell *cdkHeaderCellDef>Cancel</mat-header-cell>
-                <mat-cell *cdkCellDef="let row"> <button mat-button (click)="cancelConfirm(row.id,row.date)" style="background-color:#a319be;;color:white;display: inline-block;"><mat-icon>cancel</mat-icon></button>  </mat-cell>
-              </ng-container>
-    
-    
-        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-      <mat-paginator #paginator
-                    [length]="dataSource.filterLength"
-                    [pageIndex]="0"
-                    [pageSize]="25"
-                    [pageSizeOptions]="[5, 10, 25, 100]">
-      </mat-paginator>
+  <div class="container mat-elevation-z8">
+    <div class="header">
+      <mat-input-container floatPlaceholder="never">
+        <input matInput #filter placeholder="Filter appointments">
+      </mat-input-container>
     </div>
-    
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+
+      <ng-container cdkColumnDef="date">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header> Date </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{dateToString(row.date)}} </mat-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="time">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header> Time </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{dateToHour(row.date)}} </mat-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="notes">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header> Notes </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row.notes}} </mat-cell>
+      </ng-container>
+
+
+      <ng-container cdkColumnDef="confirmed">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header> Confirmed </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{isConfirmed(row.confirmed)}} </mat-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="cancel">
+        <mat-header-cell *cdkHeaderCellDef>Cancel</mat-header-cell>
+        <mat-cell *cdkCellDef="let row">
+          <button mat-button (click)="cancelConfirm(row.id,row.date)" style="background-color:#a319be;;color:white;display: inline-block;">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [length]="dataSource.filterLength" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>
