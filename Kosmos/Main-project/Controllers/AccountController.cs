@@ -52,10 +52,6 @@ namespace MainProject.Controllers
         [TempData]
         public string ErrorMessage { get; set; }
 
-
-     
-
-
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginViewModel model, string returnUrl = null)
