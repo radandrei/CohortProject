@@ -1,1 +1,8 @@
+<div *ngIf="isAuthenticated" class="header-part">
+        <div class="logout-button">
+          <button type=submit mat-button (click)='logout()'> Logout </button>
+        </div>
+        <div class="menu">
+        </div>
+    </div>
 <router-outlet></router-outlet>

@@ -3,6 +3,7 @@ using DataAccessLayer;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repository;
 using DataAccessLayer.RepositoryInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,5 +38,10 @@ namespace BusinessLayer.Service
             return returnList;
         }
 
+        public object GetPrescriptionById(int id)
+        {
+            var prescription = PrescriptionRepository.GetById(id);
+            return new PrescriptionPlusMedModel(prescription);
+        }
     }
 }

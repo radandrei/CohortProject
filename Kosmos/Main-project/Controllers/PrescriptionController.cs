@@ -85,6 +85,21 @@ namespace Main_Project.Controllers
                 return new BadRequestObjectResult(e);
             }
         }
+        [HttpGet("[action]/{id}")]
+        [AllowAnonymous]
+        public IActionResult GetById(int id)
+        {
+            try
+            {
+                var item = PrescriptionService.GetPrescriptionById(id);
+
+                return new OkObjectResult(item);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
+        }
 
     }
 }

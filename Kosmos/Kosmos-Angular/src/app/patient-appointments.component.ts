@@ -50,6 +50,11 @@ export class PatientAppointmentPage {
 
   }
 
+  logout(){
+    localStorage.removeItem('auth_token');
+    this.router.navigateByUrl("/");
+  }
+
   dateToString(date: Date): string {
     var currentTime = new Date(date);
     var month = currentTime.getMonth();

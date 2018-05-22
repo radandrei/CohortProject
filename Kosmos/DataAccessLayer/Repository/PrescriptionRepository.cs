@@ -66,7 +66,7 @@ namespace DataAccessLayer.Repository
 
         public Prescription GetById(int Id)
         {
-            var j = context.Prescriptions.Where(x => x.ID == Id).FirstOrDefault();
+            var j = context.Prescriptions.Where(x => x.ID == Id).Include(z=>z.Diagnosis).Include(z=>z.PrescribedMedicine).ThenInclude(y=>y.Medicine).FirstOrDefault();
             return j;
         }
 

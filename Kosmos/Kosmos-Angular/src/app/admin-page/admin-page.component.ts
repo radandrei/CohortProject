@@ -56,6 +56,11 @@ export class AdminPage {
     return retdate;
   }
 
+  logout(){
+    localStorage.removeItem('auth_token');
+    this.router.navigateByUrl("/");
+  }
+
   dateToHour(date: Date): string {
     var currentTime = new Date(date);
     var hour = currentTime.getHours();

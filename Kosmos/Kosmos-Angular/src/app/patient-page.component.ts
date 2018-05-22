@@ -54,9 +54,9 @@ export class PatientPageComponent {
   }
 
 
-  logout() {
-    this.userService.tryLogOut();
-    this.router.navigateByUrl("login");
+  logout(){
+    localStorage.removeItem('auth_token');
+    this.router.navigateByUrl("/");
   }
 
 

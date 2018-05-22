@@ -15,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { PrescriptionService } from '../shared/services/prescription.service';
 import { Prescription } from '../models/prescription';
+import { PrescriptionDialog } from '../dialog/show-prescription';
 
 
 @Component({
@@ -25,7 +26,7 @@ import { Prescription } from '../models/prescription';
 })
 
 export class PatientPrescriptionsPage {
-  displayedColumns = ['date', 'notes', 'diagnosis'];
+  displayedColumns = ['date', 'notes', 'diagnosis','see'];
   database: Database | null;
   dataSource: DataSourcePrescription | null;
   selectedPrescription: number;
@@ -39,11 +40,16 @@ export class PatientPrescriptionsPage {
     this.database = new Database(http, this.prescriptionService,router);
   }
 
-  openDialog() {
+  prescriptionDialog(id) {
 
     let dialogRef;
-    // dialogRef = this.dialog.open(DialogAdd, { width: '25%', height: '40%' });
+    dialogRef = this.dialog.open(PrescriptionDialog, { width: '25%', height: '40%' ,data:{id:id}});
 
+  }
+
+  logout(){
+    localStorage.removeItem('auth_token');
+    this.router.navigateByUrl("/");
   }
 
   dateToString(date: Date): string {
@@ -209,3 +215,4 @@ export class DataSourcePrescription extends DataSource<any> {
 
   disconnect() { }
 }
+

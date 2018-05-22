@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { Prescription } from '../../models/Prescription';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { PrescriptionPlus } from '../../models/prescriptionplus';
 
 
 
@@ -48,6 +49,10 @@ export class PrescriptionService {
 
   getPrescriptions(id: number | string): Observable<Prescription[]> {
     return this.http.get<Prescription[]>(this.PrescriptionUrl + "/getbymedicalchart/" + id);
+  }
+
+  getPrescription(id:number|string):Observable<PrescriptionPlus>{
+    return this.http.get<PrescriptionPlus>(this.PrescriptionUrl+"/getbyid/"+id);
   }
 
 }

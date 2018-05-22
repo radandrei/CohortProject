@@ -1,0 +1,14 @@
+Date : {{selectedPrescription?.date}}
+<br><br>
+Diagnosis: {{selectedPrescription?.diagnosis.name}}
+<br><br>
+<mat-list>
+        <h3 matSubheader><mat-icon matListIcon>security</mat-icon> List of medicines </h3>
+         <mat-list-item *ngFor="let medicine of meds">
+            <h4 matLine>{{medicine?.medicine.name}}</h4>
+         </mat-list-item>
+</mat-list>
+<br>
+Notes: {{selectedPrescription?.notes}}
+<br><br>
+<button type='submit' mat-dialog-close="Exit" (click)='exit()'>Exit</button>
