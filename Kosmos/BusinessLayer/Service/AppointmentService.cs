@@ -51,7 +51,7 @@ namespace BusinessLayer.Service
                 ID=appointment.ID,
                 Date = appointment.Date,
                 Notes = appointment.Notes,
-                Confirmed = appointment.Confirmed,
+                Confirmed = true,
                 PersonID = appointment.PersonId
             });
 

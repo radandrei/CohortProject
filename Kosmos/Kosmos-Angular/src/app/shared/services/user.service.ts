@@ -19,7 +19,6 @@ import { catchError } from 'rxjs/operators/catchError';
 @Injectable()
 
 export class UserService extends BaseService {
-
   baseUrl: string = '';
   userUrl;
 
@@ -115,6 +114,15 @@ export class UserService extends BaseService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl+"/getall");
   }
+
+  deleteUserById(id: number): Observable<boolean> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+ 
+    return this.http.post<boolean>(this.userUrl + "/deletebyid",id,httpOptions);
+  }
+
 
 }
 

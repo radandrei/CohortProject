@@ -56,6 +56,18 @@ export class AdminPage {
     return retdate;
   }
 
+  deleteDoctor(id: number){
+    this.UserService.deleteUserById(id).subscribe(
+      response=>{
+        alert("Medic deleted");
+        location.reload();
+      },
+      error=>{
+        console.error(error.error);
+      }     
+    )
+  }
+
   logout(){
     localStorage.removeItem('auth_token');
     this.router.navigateByUrl("/");
@@ -79,7 +91,7 @@ export class AdminPage {
 
 
   isDoctor(role){
-    return (role=='Doctor');
+    return (role=='Medic');
   }
 
   isPatient(role){

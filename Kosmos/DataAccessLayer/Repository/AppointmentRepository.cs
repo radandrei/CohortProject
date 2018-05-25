@@ -88,7 +88,9 @@ namespace DataAccessLayer.Repository
         
         public List<Appointment> GetAllByPerson(int personId)
         {
-            return context.Appointments.Where(x => x.PersonID == personId).ToList();
+            var person = context.Persons.FirstOrDefault(x => x.Id == personId);
+
+            return context.Appointments.Where(x => x.Person.CabinetID == person.CabinetID).ToList();
         }
     }
 }

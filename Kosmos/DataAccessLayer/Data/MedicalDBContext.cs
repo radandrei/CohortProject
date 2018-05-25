@@ -57,7 +57,7 @@ namespace DataAccessLayer
             modelBuilder.Entity<User>()
                   .HasOne(a => a.Person)
                   .WithOne(b => b.User)
-                  .HasForeignKey<Person>(b => b.UserId);
+                  .HasForeignKey<Person>(b => b.UserId).OnDelete(DeleteBehavior.Cascade);
 
         }
 

@@ -76,12 +76,12 @@ namespace DataAccessLayer.Data
                 RoleId = 2
             });
 
-            context.Users.Add(new User()
-            {
-                Username = "dragos",
-                Password = "$KCOA$V1$10000$bRyC0Ll5o+5iHbKMDkgR1Dfqj73bu6RTRUz3viH234lBxGn5",
-                RoleId = 3
-            });
+            //context.Users.Add(new User()
+            //{
+            //    Username = "dragos",
+            //    Password = "$KCOA$V1$10000$bRyC0Ll5o+5iHbKMDkgR1Dfqj73bu6RTRUz3viH234lBxGn5",
+            //    RoleId = 3
+            //});
 
             context.AllergicReactions.Add(new AllergicReaction()
             {
@@ -152,16 +152,16 @@ namespace DataAccessLayer.Data
                 UserId = 2
             });
 
-            context.Persons.Add(new Person()
-            {
-                Active = true,
-                CabinetID = 1,
-                FirstName = "Dragos",
-                LastName = "Onet",
-                MedicalChartID = 1,
-                PersonalDataID = 3,
-                UserId = 3
-            });
+            //context.Persons.Add(new Person()
+            //{
+            //    Active = true,
+            //    CabinetID = 1,
+            //    FirstName = "Dragos",
+            //    LastName = "Onet",
+            //    MedicalChartID = 1,
+            //    PersonalDataID = 3,
+            //    UserId = 3
+            //});
 
             context.SaveChanges();
 

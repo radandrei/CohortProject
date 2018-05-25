@@ -55,7 +55,10 @@ namespace BusinessLayer
 
         public void Delete(int Id)
         {
-            throw new System.NotImplementedException();
+            var user = GetById(Id);
+
+            context.Users.Remove(user);
+            context.SaveChanges();
         }
 
         public List<User> GetAll()

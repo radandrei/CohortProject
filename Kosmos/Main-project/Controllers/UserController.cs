@@ -48,5 +48,19 @@ namespace Main_Project.Controllers
             }
             return new ObjectResult(item);
         }
+
+        [HttpPost("[action]")]
+        public IActionResult DeleteById([FromBody]int id)
+        {
+            try
+            {
+                userService.DeleteUserById(id);
+                return new OkObjectResult(true);
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
+        }
     }
 }

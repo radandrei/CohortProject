@@ -48,6 +48,11 @@ namespace BusinessLayer.Service
             return new UserModel(user);
         }
 
+        public void DeleteUserById(int id)
+        {
+            userRepository.Delete(id);
+        }
+
         public UserModel CreateUser(string username, string password, int? roleId=null)
         {
             var saved = userRepository.CreateUser(new User()
